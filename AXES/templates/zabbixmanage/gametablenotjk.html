@@ -1,0 +1,49 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<h3><i class="fa fa-angle-right"></i>配置管理</h3>
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="content-panel">
+            <ul class="nav nav-tabs">
+                <li>
+                <a href="{% url "isjkgamelisturl" %}"><h5><i class="fa fa-angle-right"></i>已被监控</h5></a>
+                </li>
+                <li class="active">
+                <a href="{% url "notjkgamelisturl" %}"><h5><i class="fa fa-angle-right"></i>暂未监控</h5></a>
+                </li>
+            </ul>
+            <br />
+            <form class="form-horizontal style-form" method="get" action="{% url "createhostsurl" %}">
+                {% csrf_token %}
+                <section id="unseen">
+                    <table id="table_id" class="table table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>游戏</th>
+                                <th>简写</th>
+                                <th>系统</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in list %}
+                            <tr>
+                                <td>
+                                    <span class="check">
+                                        <input name="game_list" type="checkbox" class="checked" value="{{i.game_name_cn}}">
+                                        </input>
+                                    </span>
+                                    {{i.game_name_cn}}
+                                </td>
+                                <td>{{i.game_name_py}}</td>
+                                <td>{{i.game_system}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <input type='submit' class="btn btn-theme02" value='新增主机' />
+                </section>
+            </form>
+        </div><!-- /content-panel -->
+    </div><!-- /col-lg-4 -->
+</div><!-- /row -->
+{% endblock %}

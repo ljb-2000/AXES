@@ -1,0 +1,61 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<script type="text/javascript">
+function openShutManager(oSourceObj,oTargetObj,shutAble,oOpenTip,oShutTip){
+    var sourceObj = typeof oSourceObj == "string" ? document.getElementById(oSourceObj) : oSourceObj;
+    var targetObj = typeof oTargetObj == "string" ? document.getElementById(oTargetObj) : oTargetObj;
+    var openTip = oOpenTip || "";
+    var shutTip = oShutTip || "";
+    if(targetObj.style.display!="none"){
+        if(shutAble) return;
+        targetObj.style.display="none";
+        if(openTip  &&  shutTip){
+            sourceObj.innerHTML = shutTip; 
+        }
+    } else {
+        targetObj.style.display="block";
+        if(openTip  &&  shutTip){
+            sourceObj.innerHTML = openTip; 
+        }
+    }
+}
+</script>
+<h3><i class="fa fa-angle-right"></i>zabbix管理</h3>
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> proxylist</h4>
+            <section id="unseen">
+                <table id="table_id" class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>proxyid</th>
+                            <th>proxyname</th>
+                            <th>包含的主机数</th>
+                            <th>包含的主机</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in proxy_dict %}
+                        <tr>
+                            <td>{{i.proxyid}}</td>
+                            <td>{{i.host}}</td>
+                            <td>{{i.count}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal-host" onclick="openShutManager(this, '{{i.proxyid}}')">展开查看主机</button>
+                                <p id="{{i.proxyid}}" style="display:none">
+                                    {% for j in i.hosts %}
+                                    <a href="{% url 'hostinfourl' j.host %}">{{j.host}}</a>&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'hostinfourl' j.host %}">{{j.name}}</a>
+                                    <br />
+                                    {% endfor %}
+                                </p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </div><!-- /content-panel -->
+    </div><!-- /col-lg-4 -->
+</div><!-- /row -->
+{% endblock %}

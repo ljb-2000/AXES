@@ -1,0 +1,127 @@
+{% extends 'base/bases.html' %}
+{% load staticfiles %}
+{% block content %}
+<script src="{% static "js/jquery-1.8.3.min.js" %}"></script>
+<script>
+    $(document).ready(function(){		
+            $("#but").click(function(){
+                    var $table=$("#tab_macro");
+                    var len=$table.length;
+                    $("#tab_macro").append("<tr><td><input type=\'text\' class=\'form-control\' id=\'macro_key\' name=\'macro_key\' placeholder=\'{$EXAMPE}\' /></td><td><input type=\'text\' class=\'form-control\' id=\'macro_value\' name=\'macro_value\' /></td></tr>");
+                    })
+            })
+</script>
+<h3><i class="fa fa-angle-right"></i> zabbix管理</h3>
+<!-- BASIC FORM ELELEMNTS -->
+<div class="row mt mb">
+    <div class="col-md-12">
+        <div class="form-panel">
+            <h4 class="mb"><i class="fa fa-angle-right"></i>新建主机</h4>
+            <form class="form-horizontal style-form" method="post" action="{% url 'createhosturl' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">主机名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="host" class="form-control round-form" placeholder="IP"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">可见名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" class="form-control round-form" placeholder="TY_WX_52027_IP"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">主机组</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="group" class="form-control round-form" placeholder="桃园_GS"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">代理</label>
+                </div>
+                <div class="form-group">
+                    <div class="row-fluid">
+                        {% for i in proxys %}
+                        <div class="col-xs-3 span3">
+                            <label class="checkbox-inline">
+                                <input type="radio" name="proxy" value="{{i.proxyid}}">{{i.host}}
+                                </input>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">模板</label>
+                </div>
+                <div class="form-group">
+                    <div class="row-fluid">
+                        {% for i in options %}
+                        <div class="col-xs-3 span3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="template" value="{{i.templateid}}">{{i.name}}
+                                </input>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button type="button" class="btn btn-theme02" data-toggle="modal" data-target="#Macros-global">查看全局宏</button>
+                <table id="tab_macro" class="table table-striped table-advance table-hover">
+                    <h5><i class="fa fa-tasks"></i>宏</h5>
+                    <thead>
+                        <tr>
+                            <th>macro</th>
+                            <th>value</th>
+                        </tr>
+                    </thead>
+                </table>
+                <button type="button" id="but" class="btn btn-theme02">增加宏</button>
+                <br />
+                <br />
+                <div class="modal fade" id="Macros-global" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">操作确认</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table id="table_id" class="table table-striped table-advance table-hover">
+                                    <h5><i class="fa fa-tasks"></i>全局宏</h5>
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>宏</th>
+                                            <th>value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for macro in global_macros %}
+                                        <tr>
+                                            <td>{{macro.globalmacroid}}</td>
+                                            <td>{{macro.macro}}</td>
+                                            <td>{{macro.value}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" data-dismiss="modal">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <button type="submit" name="update" class="btn btn-theme02">创建主机</button>
+                        <input type="button" class="btn btn-theme02" onclick="javascript:history.back(-1);" value="返回上一页" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

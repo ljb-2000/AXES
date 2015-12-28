@@ -1,0 +1,98 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<script type="text/javascript">
+    function buttontest(testid){
+        $("#del_names").val(testid);
+    }
+</script>
+<h3><i class="fa fa-angle-right"></i>配置管理</h3>
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="content-panel">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                <a href="{% url "isjkgamelisturl" %}"><h5><i class="fa fa-angle-right"></i> 已被监控</h5></a>
+                </li>
+                <li>
+                <a href="{% url "notjkgamelisturl" %}"><h5><i class="fa fa-angle-right"></i>暂未监控</h5></a>
+                </li>
+            </ul>
+            <br />
+            {% csrf_token %}
+            <section id="unseen">
+                <table id="table_id" class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>游戏</th>
+                            <th>简写</th>
+                            <th>系统</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in list %}
+                        <tr>
+                            <td>
+                                <span class="check">
+                                    <input name="game_list" type="checkbox" class="checked" value="{{i.id}}">
+                                    </input>
+                                </span>
+                                <a href="{% url 'hostlisturl' i.game_name_cn %}">{{i.game_name_cn}}</a>
+                            </td>
+                            <td>{{i.game_name_py}}</td>
+                            <td>{{i.game_system}}</td>
+                            <td>
+                                <button type="button" id="{{i.game_name_cn}}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal-edit" onclick="return buttontest(this.id)"><i class="fa fa-pencil"></i></button>
+                                <button type="button" id="{{i.game_name_cn}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-delete" onclick="return buttontest(this.id)"><i class="fa fa-trash-o"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </div><!-- /content-panel -->
+    </div><!-- /col-lg-4 -->
+</div><!-- /row -->
+<form class="form-horizontal style-form" method="post" action="">
+    {% csrf_token %}
+
+    <div class="modal fade" id="myModal-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">操作确认</h4>
+                </div>
+                <div class="modal-body">
+                    更新主机
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form class="form-horizontal style-form" method="post" action="{% url "delhostbynameurl" %}">
+    {% csrf_token %}
+    <div class="modal fade" id="myModal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">操作确认</h4>
+                </div>
+                <div class="modal-body">
+                    移除该游戏监控,该步骤耗时较长。请多次刷新查看结果。
+                </div>
+                <div class="modal-footer">
+                    <input id="del_names" name="del_names" type="" value="hidden">
+                    <button type="submit" class="btn btn-primary">确认</button>
+                    <button class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

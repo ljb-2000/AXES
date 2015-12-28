@@ -1,0 +1,74 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<script type="text/javascript">
+    function buttontest(testid){
+        $("#del_ids").val(testid);
+    }
+</script>
+<h3><i class="fa fa-angle-right"></i>zabbix管理</h3>
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> 主机组列表</h4>
+            <form class="form-horizontal style-form" method="post" action="{% url "delgroupsandhostsurl" %}">
+                {% csrf_token %}
+                <section id="unseen">
+                    <table id="table_id" class="table table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>包含主机数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in list %}
+                            <tr>
+                                <td>
+                                    <span class="check">
+                                        <input name="group_list" type="checkbox" class="checked" value="{{i.groupid}}">
+                                        </input>
+                                    </span>
+                                    {{i.groupid}}
+                                </td>
+                                <td><a href="{% url 'grouphostlisturl' i.name %}">{{i.name}}</a></td>
+                                <td><a href="{% url 'grouphostlisturl' i.name %}">{{i.hosts}}</a></td>
+                                <td>
+                                    <a href="{% url 'updategroupurl' i.groupid %}"><button type="button" class="btn btn-primary btn-xs" onclick="return confirm('是否确认修改该组？id={{i.groupid}}')" ><i class="fa fa-pencil"></i></button></a>
+                                    <button type="button" id="{{i.groupid}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-delete" onclick="return buttontest(this.id)"><i class="fa fa-trash-o"></i></button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+                <input type='submit' class="btn btn-theme02" value='删除组及主机' />
+                <a href="{% url 'creategroupurl' %}"><button type="button" class="btn btn-theme02">新建组</button></a>
+            </form>
+        </div><!-- /content-panel -->
+    </div><!-- /col-lg-4 -->
+</div><!-- /row -->
+<form class="form-horizontal style-form" method="post" action="{% url "delgroupurl" %}">
+    {% csrf_token %}
+    <div class="modal fade" id="myModal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">操作确认</h4>
+                </div>
+                <div class="modal-body">
+                    含有主机的组不能删除，请确认主机数量是否为0.
+                </div>
+                <div class="modal-footer">
+                    <input id="del_ids" name="del_ids" type="hidden" value="">
+                    <button type="submit" class="btn btn-primary">确认</button>
+                    <button class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

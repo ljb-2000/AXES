@@ -1,0 +1,366 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+import json
+import urllib2
+import urllib
+import sys
+#  import ConfigParser
+#  import codecs
+import Queue
+import threading
+import sqlalchemy as sqlpy
+
+reload(sys)
+sys.setdefaultencoding('utf8')
+THREAD_NUM = 5
+
+
+class MyThread(threading.Thread):
+
+    def __init__(self, url, queue):
+        super(MyThread, self).__init__()
+        self.queue = queue
+        self.url = url
+
+    def run(self):
+        while True:
+            host = self.queue.get()
+            createHost(self.url, host)
+            self.queue.task_done()
+
+
+def auth(url):
+    data = {
+        "jsonrpc": "2.0",
+        "method": "user.login",
+        "params": {
+            "user": "admin",
+            "password": "vYfKc8FSk81PkvEmaiSoTYbt2N3jttpR"
+        },
+        "id": 1
+    }
+    post_data = json.dumps(data)
+    header = {"Content-Type": "application/json"}
+    request_data = urllib2.Request(url, post_data)
+    for key in header:
+        request_data.add_header(key, header[key])
+    result = urllib2.urlopen(request_data)
+    auth_code = json.loads(result.read())['result']
+    return auth_code
+
+
+def processData(url, method, params, auth_code):
+    header = {"Content-Type": "application/json"}
+    data = {
+        "jsonrpc": "2.0",
+        "method": "",
+        "params": {},
+        "auth": "",
+        "id": 1
+    }
+    data['method'] = method
+    data['params'] = params
+    data['auth'] = auth_code
+    post_data = json.dumps(data)
+    request_data = urllib2.Request(url, post_data)
+    for key in header:
+        request_data.add_header(key, header[key])
+    try:
+        result = urllib2.urlopen(request_data)
+    except Exception as e:
+        print e
+    else:
+        response = json.loads(result.read())
+        return response
+
+
+def getDataFromSeal(project_name):
+    url = u"http://seal.cyou-inc.com/a/application/deviceInterface/getDeviceInfo/assetInfo?"
+    project_name = urllib.urlencode({'productName': project_name.decode('utf-8')})
+    url += project_name
+    request_data = urllib2.Request(url, '')
+    header = {
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; rv:16.0) Gecko/20100101 Firefox/16.0',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Connection': 'keep-alive'
+    }
+    for key in header:
+        request_data.add_header(key, header[key])
+    try:
+        data = urllib2.urlopen(request_data)
+    except Exception as e:
+        print e
+    else:
+        return json.loads(data.read())
+
+
+def processSealData(url, project_name, queue, template_id, server_state, function):
+    #  conf = ConfigParser.ConfigParser()
+    #  conf.readfp(codecs.open('ZabbixPy.conf', 'r', 'utf-8'))
+    mysql_engine = sqlpy.create_engine("mysql://root:root@localhost:3036/AXESDatabases", connect_args={"charset": "utf8"})
+    idcsql = u"select * from systemmanage_idc"
+    gamesql = u"select game_name_py from systemmanage_game where game_name_cn = '%s'" %project_name.encode('utf8')
+    conn = mysql_engine.connect()
+    game_result = conn.execute(gamesql)
+    for i in game_result:
+        game_name = i[0]
+    idc_result = conn.execute(idcsql)
+    idc_name_dict = {}
+    proxy_name_dict = {}
+    for idc in idc_result:
+        idc_name_dict[idc['idc_name_cn']] = idc['idc_name_py']
+        proxy_name_dict[idc['idc_name_py']] = idc['proxy_name']
+    conn.close()
+    data = getDataFromSeal(project_name)
+    for i in data:
+        if i['wanIpTd']:
+            host_dict = {}
+            """在线服后缀无备机，GS、DB、Other根据用户选择定义"""
+            if i['statue'] == 'Online' and 'Online' in server_state:
+                if i['function'] in function:
+                    group_name = '_'.join([project_name, i['function']])
+                else:
+                    continue
+            elif i['statue'] == 'Standby' and 'Standby' in server_state:
+                if i['function'] in function:
+                    group_name = '_'.join([project_name, i['function'], 'beiji'])
+                else:
+                    continue
+            else:
+                continue
+            idc_name_cn = ''.join(list(i['idcName'])[0:2]).decode('utf8')
+            print idc_name_cn
+            if idc_name_cn == u'木樨':
+                idc_name_cn = u'木樨园'
+            idc_name = idc_name_dict[idc_name_cn]
+            proxy_name = proxy_name_dict[idc_name]
+            print idc_name
+            print proxy_name
+            """获取信息，命名host_name 项目_机房_组号_IP"""
+            if i['serverGroupNo']:
+                host_name = '_'.join([game_name, idc_name, i['serverGroupNo'], i['wanIpTd']])
+            else:
+                if i['subFunction'] == 'Billing':
+                    host_name = '_'.join([game_name, idc_name, i['subFunction'], i['wanIpTd']])
+                else:
+                    host_name = '_'.join([game_name, idc_name, 'None', i['wanIpTd']])
+            """通过机房信息，判断proxy_id"""
+            #  proxy_name = conf.get('proxy', idc_name)
+            if idc_name =='MXY':
+                proxy_id = None
+            all_proxy_infos = getProxy(url)['result']
+            for proxy_info in all_proxy_infos:
+                if proxy_name == proxy_info['host']:
+                    proxy_id = proxy_info['proxyid']
+            """获取组id，如果存在组，通过zabbix读取，不存在，创建并读取"""
+            if group_name:
+                if isGroup(url, group_name):
+                    group_info = getGroupInfo(url, group_name)
+                    group_id = group_info['result'][0]['groupid']
+                else:
+                    group_info = createGroup(url, group_name)
+                    group_id = group_info['result']['groupids']
+            """将数据整合"""
+            if group_id and host_name:
+                host_dict['template_id'] = template_id
+                host_dict['group_id'] = group_id
+                host_dict['proxy_id'] = proxy_id
+                host_dict['host_name'] = host_name
+                if i['subFunction'] == 'Billing':
+                    host_dict['host_ip'] = i['lanIpTd']
+                else:
+                    host_dict['host_ip'] = i['wanIpTd']
+            else:
+                continue
+            print host_dict
+            queue.put(host_dict)
+
+
+def isGroup(url, group_name):
+    auth_code = auth(url)
+    method = "hostgroup.exists"
+    params = {
+        "name": group_name
+    }
+    is_exists = processData(url, method, params, auth_code)
+    return is_exists['result']
+
+
+def createHost(url, host):
+    auth_code = auth(url)
+    method = "host.create"
+    interfaces = [{"type": 1, "main": 1, "useip": 1, "ip": host['host_ip'].split(';')[0], "dns": "", "port": "10050"}]
+    params = {
+        "host": host['host_ip'].split(';')[0],
+        "name": host['host_name'],
+        "interfaces": interfaces,
+        "groups": [{
+            "groupid": host['group_id']
+        }],
+        "templates": [{
+            "templateid": host['template_id']
+        }],
+        "proxy_hostid": host["proxy_id"]
+    }
+    new_host_infos = processData(url, method, params, auth_code)
+    print new_host_infos
+
+
+def deleteOneHost(url, host_id):
+    auth_code = auth(url)
+    method = "host.delete"
+    params = host_id
+    delete_infos = processData(url, method, params, auth_code)
+    print json.dumps(delete_infos)
+
+
+def deleteHost(url, group_id):
+    hosts_info = getHostInfo(url, group_id)['result']
+    method = "host.delete"
+    auth_code = auth(url)
+    host_id_list = []
+    for host in hosts_info:
+        host_id_list.append(host['hostid'])
+    params = host_id_list
+    delete_infos = processData(url, method, params, auth_code)
+    print json.dumps(delete_infos)
+
+
+def deleteHostByName(url, host_ids):
+    method = "host.delete"
+    auth_code = auth(url)
+    params = host_ids
+    delete_infos = processData(url, method, params, auth_code)
+    print json.dumps(delete_infos)
+
+
+def createGroup(url, group_name):
+    auth_code = auth(url)
+    method = "hostgroup.create"
+    params = {
+        "name": group_name
+    }
+    new_group_infos = processData(url, method, params, auth_code)
+    return new_group_infos
+
+
+def deleteGroup(url, group_ids):
+    auth_code = auth(url)
+    method = "hostgroup.delete"
+    params = group_ids
+    delete_groups_info = processData(url, method, params, auth_code)
+    print json.dumps(delete_groups_info)
+
+
+def getProxy(url):
+    auth_code = auth(url)
+    method = "proxy.get"
+    params = {
+        "output": ["proxyid", "host"]
+    }
+    proxy_data = processData(url, method, params, auth_code)
+    return proxy_data
+
+
+def getTemplateInfo(url, template_name=None):
+    auth_code = auth(url)
+    method = "template.get"
+    if template_name:
+        params = {
+            "output": ["host", "name", "template"],
+            "filter": {
+                "name": [template_name]
+            }
+        }
+    else:
+        params = {
+            "output": ["host", "name", "template"]
+        }
+    templates_info = processData(url, method, params, auth_code)
+    return templates_info
+
+
+def getHostInfo(url, group_id=None):
+    auth_code = auth(url)
+    method = "host.get"
+    # params = {"output": "extend"}
+    if group_id:
+        params = {
+            "output": ["hostid", "name", "host", "proxy_hostid"],
+            "groupids": group_id
+        }
+    else:
+        params = {"output": ["hostid", "name", "host", "proxy_hostid"]}
+    host_infos = processData(url, method, params, auth_code)
+    return host_infos
+
+
+def getOneHostInfo(url, host_name):
+    auth_code = auth(url)
+    method = "host.get"
+    params = {
+        "output": ["hostid", "name", "host", "status"],
+        "selectParentTemplates": [
+            "templateid",
+            "name",
+        ],
+        "filter": {
+            "host": host_name
+        }
+    }
+    host_info = processData(url, method, params, auth_code)
+    return host_info['result']
+
+
+def getGroupInfo(url, group_name=None):
+    auth_code = auth(url)
+    method = "hostgroup.get"
+    if group_name:
+        params = {
+            "output": "extend",
+            "selectHosts": ["host", "hostid", "name", "proxy_hostid"],
+            "filter": {
+                "name": group_name
+            }
+        }
+    else:
+        params = {"ouput": "extend", "selectHosts": "count"}
+    group_info = processData(url, method, params, auth_code)
+    return group_info
+
+
+def updateHost(url, host_id, name_new, template_new, group_new, status):
+    auth_code = auth(url)
+    method = "host.update"
+    params = {
+        "hostid": host_id,
+        "name": name_new,
+        "templates": template_new,
+        "groups": group_new,
+        "status": status,
+    }
+    update_info = processData(url, method, params, auth_code)
+    print update_info
+
+
+def main(url, project_name, template_id, server_state, function):
+    queue = Queue.Queue(maxsize=-1)
+    for i in xrange(THREAD_NUM):
+        thread = MyThread(url, queue)
+        thread.setDaemon(True)
+        thread.start()
+    processSealData(url, project_name, queue, template_id, server_state, function)
+    queue.join()
+
+if __name__ == '__main__':
+    queue = Queue.Queue()
+    url = "http://123.59.6.164/api_jsonrpc.php"
+    print json.dumps(getGroupInfo(url, u'狩龙战纪_GS')['result'][0]['groupid'], indent=4)
+    print getTemplateInfo(url, u'Template OS Linux')['result']
+    #  updateHost(url, 11270, 'tesl1t', [{"templateid": 10105}], [31], 1)
+    #  print json.dumps(getGroupInfo(url, 104)['result'], indent=4)
+    #  project_name = u"狩龙战纪"
+    #  #  processSealData(url, project_name, queue, "10105", ['Online'], ['DB'])
+    #  main(url, project_name, "10105,10104", ["Online"], ["GS"])
