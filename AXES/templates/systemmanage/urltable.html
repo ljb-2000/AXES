@@ -1,0 +1,62 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<script type="text/javascript">
+    function buttontest(testid){
+        $("#del_id").val(testid);
+    }
+</script>
+<h3><i class="fa fa-angle-right"></i>配置管理</h3>
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> url列表</h4>
+            <section id="unseen">
+                <table id="table_id" class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>url</th>
+                            <th>username</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in list %}
+                        <tr>
+                            <td>{{i.url}}</td>
+                            <td>{{i.username}}</td>
+                            <td>
+                                <a href=""><button type="button" class="btn btn-primary btn-xs" onclick="return confirm('是否确认修改？')"><i class="fa fa-pencil"></i></button></a>
+                                <button type="button" id="{{i.url}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-delete" onclick="return buttontest(this.id)"><i class="fa fa-trash-o"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </div><!-- /content-panel -->
+    </div><!-- /col-lg-4 -->
+</div><!-- /row -->
+<br />
+<a href="{% url "addurlurl" %}"><button type="button" class="btn btn-theme02">新增url</button></a>
+<form class="form-horizontal style-form" method="post" action="{% url 'delurlurl' %}">
+    {% csrf_token %}
+    <div class="modal fade" id="myModal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">操作确认</h4>
+                </div>
+                <div class="modal-body">
+                    确认删除操作
+                    <input id="del_id" name="del_id" readOnly="true" />
+                </div>
+                <div class="modal-footer">
+                    <a><button type="submit" class="btn btn-primary">确认</button></a>
+                    <a><button type="button" class="btn btn-default" data-dismiss="modal">取消</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

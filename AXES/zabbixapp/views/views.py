@@ -1,6 +1,6 @@
 # encoding: utf-8
 from django.shortcuts import render
-from systemmanage.models import Game
+from systemmanage.models import Game, ZabbixUrl
 import zabbixtools.zabbixapi as zabbixapi
 import zabbixscript
 from django.http import HttpResponseRedirect
@@ -8,17 +8,29 @@ from django.core.urlresolvers import reverse
 import re
 from collections import OrderedDict
 import sys
-import json
 
-# Create your views here.
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-url = "http://101.201.150.146:8080/api_jsonrpc.php"
-#  url = "http://123.59.6.164/api_jsonrpc.php"
+
+def getCookieUrl(request):
+    if request.COOKIES.get('url'):
+        url = request.COOKIES.get('url')
+    else:
+        url = "http://123.59.6.164/api_jsonrpc.php"
+    return url
+
+
+def getUrlView(request, URL):
+    if URL:
+        url = "http://" + URL + "/api_jsonrpc.php"
+    httpresponse = HttpResponseRedirect(reverse('isjkgamelisturl'))
+    httpresponse.set_cookie(key="url", value=url)
+    return httpresponse
 
 
 def notjkGameListView(request):
+    url = getCookieUrl(request)
     games_info = Game.objects.all()
     game_list = []
     is_exist_game = [group_name['name'].split('_')[0] for group_name in zabbixapi.getGroupInfo(url)['result']]
@@ -33,6 +45,9 @@ def notjkGameListView(request):
 
 
 def jkGameListView(request):
+    url = getCookieUrl(request)
+    zabbix_url = ZabbixUrl.objects.all()
+    urllist = [i.url for i in zabbix_url]
     games_info = Game.objects.all()
     game_list = []
     is_exist_game = [group_name['name'].split('_')[0] for group_name in zabbixapi.getGroupInfo(url)['result']]
@@ -43,10 +58,13 @@ def jkGameListView(request):
     context_dict = {
         'list': game_list
     }
+    request.session['urllist'] = urllist
+    request.session['length'] = len(urllist)
     return render(request, 'zabbixmanage/gametableisjk.html', context_dict)
 
 
 def templateListView(request):
+    url = getCookieUrl(request)
     template_info = zabbixapi.getTemplateInfo(url)['result']
     context_dict = {
         'list': template_info,
@@ -55,6 +73,7 @@ def templateListView(request):
 
 
 def groupListView(request):
+    url = getCookieUrl(request)
     group_info = zabbixapi.getGroupInfo(url)['result']
     context_dict = {
         'list': group_info,
@@ -63,6 +82,7 @@ def groupListView(request):
 
 
 def createGroupView(request):
+    url = getCookieUrl(request)
     if request.method == 'POST':
         group_name = request.POST['group_name']
         zabbixapi.createGroup(url, group_name)
@@ -72,6 +92,7 @@ def createGroupView(request):
 
 
 def delGroupAndHostView(request):
+    url = getCookieUrl(request)
     group_ids = request.REQUEST.getlist('group_list')
     for group_id in group_ids:
         zabbixapi.deleteHost(url, group_id=group_id)
@@ -80,6 +101,7 @@ def delGroupAndHostView(request):
 
 
 def delGroupView(request):
+    url = getCookieUrl(request)
     id_list = []
     ID = request.POST['del_ids']
     id_list.append(ID)
@@ -88,6 +110,7 @@ def delGroupView(request):
 
 
 def delHostByNameView(request):
+    url = getCookieUrl(request)
     game_name_cn = request.POST['del_names']
     groups = zabbixapi.getGroupInfo(url)['result']
     for group in groups:
@@ -98,18 +121,21 @@ def delHostByNameView(request):
 
 
 def delHostView(request, GNAME):
+    url = getCookieUrl(request)
     host_id = request.POST['del_id']
     zabbixapi.deleteHost(url, host_id=[host_id])
     return HttpResponseRedirect(reverse('grouphostlisturl', args=[GNAME]))
 
 
 def delHostProjectView(request, GNAME):
+    url = getCookieUrl(request)
     host_id = request.POST['del_id']
     zabbixapi.deleteHost(url, host_id=[host_id])
     return HttpResponseRedirect(reverse('hostlisturl', args=[GNAME]))
 
 
 def manageHostInGroupView(request, GNAME):
+    url = getCookieUrl(request)
     if request.method == 'POST':
         if 'create' in request.POST:
             game_list = [GNAME]
@@ -144,6 +170,7 @@ def manageHostInGroupView(request, GNAME):
 
 
 def createHostsView(request):
+    url = getCookieUrl(request)
     game_list = request.REQUEST.getlist('game_list')
     if request.method == 'POST':
         template_list = request.REQUEST.getlist('template_list')[0]
@@ -165,6 +192,7 @@ def createHostsView(request):
 
 
 def createHostView(request):
+    url = getCookieUrl(request)
     if request.method == 'POST':
         host = request.POST.get('host')
         name = request.POST.get('name')
@@ -204,6 +232,7 @@ def createHostView(request):
 
 
 def hostListView(request, GNAME):
+    url = getCookieUrl(request)
     all_group = zabbixapi.getGroupInfo(url)['result']
     host_list = []
     host_dict = {}
@@ -223,6 +252,7 @@ def hostListView(request, GNAME):
 
 
 def groupHostListView(request, GNAME):
+    url = getCookieUrl(request)
     result = zabbixapi.getGroupInfo(url, group_name=GNAME)['result']
     group_id = result[0]['groupid']
     host_infos = zabbixapi.getHostInfo(url, group_id=group_id)['result']
@@ -239,6 +269,7 @@ def groupHostListView(request, GNAME):
 
 
 def updateTemplateView(request, TNAME):
+    url = getCookieUrl(request)
     result = zabbixapi.getTemplateInfo(url, template_name=TNAME)['result'][0]
     is_linked_template = result['parentTemplates']
     template_old_id_list = [template['templateid'] for template in is_linked_template]
@@ -284,6 +315,7 @@ def updateTemplateView(request, TNAME):
 
 
 def oneHostInfoView(request, HNAME):
+    url = getCookieUrl(request)
     result = zabbixapi.getHostInfo(url, host_name=HNAME)['result'][0]
     template_current = result['parentTemplates']
     key = ['templateid' for i in range(len(template_current))]
@@ -357,6 +389,7 @@ def oneHostInfoView(request, HNAME):
 
 
 def proxyListView(request):
+    url = getCookieUrl(request)
     result = zabbixapi.getProxyInfo(url)['result']
     for proxy in result:
         count = len(proxy['hosts'])
@@ -368,6 +401,7 @@ def proxyListView(request):
 
 
 def updateGroupView(request, GID):
+    url = getCookieUrl(request)
     if request.method == 'POST':
         GNAME = request.POST['group_name']
         zabbixapi.updateGroup(url, group_id=GID, group_name=GNAME)

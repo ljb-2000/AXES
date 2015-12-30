@@ -3,19 +3,37 @@
 
 import json
 import urllib2
+import MySQLdb
 import sys
+import re
+from systemmanage.views import decrypt
 reload(sys)
 sys.setdefaultencoding('utf8')
+ip_regular = "(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])"
+port_regular = ip_regular + ":\d{2,5}"
 
 
 def auth(url):
+    ip = re.search(port_regular, url).group() if re.search(port_regular, url) else re.search(ip_regular, url).group()
+    try:
+        conn = MySQLdb.connect(host='localhost', user="root", passwd="root", db="AXESDatabases", port=3306)
+        cur = conn.cursor()
+        sql_str = "select username, password from systemmanage_zabbixurl where url='%s'" %ip
+        cur.execute(sql_str)
+        for result in cur.fetchall():
+            username = result[0]
+            passwd = result[1]
+        password = decrypt(passwd)
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        print 'Erro %s' %e
     data = {
         "jsonrpc": "2.0",
         "method": "user.login",
         "params": {
-            "user": "admin",
-            "password": "vYfKc8FSk81PkvEmaiSoTYbt2N3jttpR"
-            #  "password": "zabbix"
+            "user": username,
+            "password": password
         },
         "id": 1
     }
@@ -439,8 +457,9 @@ def isGroup(url, group_name):
 
 if __name__ == '__main__':
     url = "http://123.59.6.164/api_jsonrpc.php"
-    print isGroup(url, "aaa")
-    #  print json.dumps(getHostInfo(url, host_id="12147"), indent=4)
+    #  print isGroup(url, "aaa")
+    print type(json.dumps(getHostInfo(url, host_id="12147")))
+    print json.dumps(getHostInfo(url, host_id="12220")['result'])
     #  print json.dumps(getTemplateInfo(url, template_name=u"Template SNMP OS Windows"), indent=4)
     #  updateMacros(url, "12159", [{"macro": "{$AAA}", "value": "123"}])
     #  print json.dumps(getHostInfo(url, host_id="12159"), indent=4)

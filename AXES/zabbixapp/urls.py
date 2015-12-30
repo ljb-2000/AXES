@@ -6,6 +6,7 @@ from zabbixapp.views import views
 
 urlpatterns = patterns(
     '',
+    url(r'^geturl/url=(?P<URL>[^/]+)/$', views.getUrlView, name='geturlurl'),
     url(r'^projectlist/$', views.jkGameListView, name='isjkgamelisturl'),
     url(r'^projectlist/nomonitor/$', views.notjkGameListView, name='notjkgamelisturl'),
     url(r'^templatelist/$', views.templateListView, name='templatelisturl'),
