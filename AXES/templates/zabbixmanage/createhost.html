@@ -1,5 +1,7 @@
 {% extends 'base/bases.html' %}
+{% load staticfiles %}
 {% block content %}
+<script src="{% static "js/jquery.js" %}"></script>
 <h3><i class="fa fa-angle-right"></i>配置管理</h3>
 <div class="row mt">
     <div class="col-lg-12">
@@ -27,10 +29,29 @@
                                     <input type="checkbox" id="inlineCheckbox1" name="{{i}}_state_list" value="Online">Online</input>
                                     <input type="checkbox" id="inlineCheckbox1" name="{{i}}_state_list" value="Standby">Standby</input>
                                 </td>
-                                <td>
+                                <td style="word-break:break-all">
+                                    <p>
                                     <input type="checkbox" id="inlineCheckbox1" name="{{i}}_function_list" value="GS">GS</input>
+                                    </p>
+                                    <p>
                                     <input type="checkbox" id="inlineCheckbox1" name="{{i}}_function_list" value="DB">DB</input>
-                                    <input type="checkbox" id="inlineCheckbox1" name="{{i}}_function_list" value="Other">Other</input>
+                                    </p>
+                                    <p>
+                                    <input type="checkbox" id="Other" name="{{i}}_function_list" value="Other">Other</input>
+                                    <div id="other-other">
+                                        <p>
+                                        <input type="checkbox" id="Other_other" name="{{i}}_subfunction_list" value="Billing">Billing</input>
+                                        <input type="checkbox" id="Other_other" name="{{i}}_subfunction_list" value="Queue">Queue</input>
+                                        <input type="checkbox" id="Other_other" name="{{i}}_subfunction_list" value="中控">中控</input>
+                                        </p>
+                                        <p>
+                                        <input type="checkbox" id="Other_other" name="{{i}}_subfunction_list" value="日志">日志</input>
+                                        <input type="checkbox" id="Other_other" name="{{i}}_subfunction_list" value="代理">代理</input>
+                                        <input type="checkbox" id="Other_other" name="{{i}}_subfunction_list" value="其它-Win">其它-Win</input>
+                                        </p>
+                                        <input type="checkbox" id="Other_other" name="{{i}}_subfunction_list" value="其它-Linux">其它-Linux</input>
+                                    </div>
+                                    </p>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -43,21 +64,38 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="row-fluid">
-                        {% for i in options %}
-                        <div class="col-xs-3 span3">
-                            <label class="checkbox-inline">
-                                <input type="radio" id="inlineCheckbox1" name="template_list" value="{{i.templateid}}">{{i.name}}
-                                </input>
-                            </label>
+                    <table class="table table-bordered table-striped table-condensed">
+                        <div class="row-fluid">
+                            {% for i in options %}
+                            <div class="col-xs-3 span3">
+                                <label class="checkbox-inline">
+                                    <input type="radio" id="inlineCheckbox1" name="template_list" value="{{i.templateid}}">{{i.name}}
+                                    </input>
+                                </label>
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
+                    </table>
+                    <div class="showback">
+                        <button type="submit" name="update" class="btn btn-theme02">保存</button>
+                        <input type="button" class="btn btn-theme02" onclick="javascript:history.back(-1);" value="返回上一页" />
                     </div>
-                    <br />
-                    <input type='submit' class="btn btn-theme02" value='保存' />
                 </section>
             </form>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){ 
+            $('#other-other').hide();
+            $("#Other").click(function(){
+                    if($("#Other").is(":checked")){
+                    $('#other-other').show();
+                    }else{
+                    $('#other-other').hide();
+                    }
+                    });
+            });
+</script>
+
 {% endblock %}

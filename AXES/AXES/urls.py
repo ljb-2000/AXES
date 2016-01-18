@@ -18,6 +18,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^start/$', 'zabbixapp.views.views.startMaintenanceView', name='starturl'),
+    url(r'^stop/$', 'zabbixapp.views.views.stopMaintenanceView', name='stopurl'),
     url(r'^confmanage/', include('systemmanage.urls')),
-    url(r'^zabbixmanage/', include('zabbixapp.urls'))
+    url(r'^zabbixmanage/', include('zabbixapp.urls')),
+    url(r'^log/', include('commonapp.urls')),
 ]

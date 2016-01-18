@@ -36,15 +36,15 @@ function openShutManager(oSourceObj,oTargetObj,shutAble,oOpenTip,oShutTip){
                         </tr>
                     </thead>
                     <tbody>
-                        {% for i in proxy_dict %}
+                        {% for i in proxy %}
                         <tr>
-                            <td>{{i.proxyid}}</td>
-                            <td>{{i.host}}</td>
+                            <td>{{i.proxy.proxyid}}</td>
+                            <td>{{i.proxy.host}}</td>
                             <td>{{i.count}}</td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal-host" onclick="openShutManager(this, '{{i.proxyid}}')">展开查看主机</button>
-                                <p id="{{i.proxyid}}" style="display:none">
-                                    {% for j in i.hosts %}
+                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal-host" onclick="openShutManager(this, '{{i.proxy.proxyid}}')">展开查看主机</button>
+                                <p id="{{i.proxy.proxyid}}" style="display:none">
+                                    {% for j in i.proxy.hosts %}
                                     <a href="{% url 'hostinfourl' j.host %}">{{j.host}}</a>&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'hostinfourl' j.host %}">{{j.name}}</a>
                                     <br />
                                     {% endfor %}

@@ -13,11 +13,10 @@
         <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
         <!--external css-->
         <link href="{% static "font-awesome/css/font-awesome.css" %}" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="{% static "css/zabuto_calendar.css" %}">
         <link rel="stylesheet" type="text/css" href="{% static "js/gritter/css/jquery.gritter.css" %}" />
-        <link rel="stylesheet" type="text/css" href="{% static "lineicons/style.css" %}">    
+        <link rel="stylesheet" type="text/css" href="{% static "lineicons/style.css" %}" />    
 
-        <link rel="stylesheet" type="text/css" href="{% static "media/css/dataTables.bootstrap.css" %}">    
+        <link rel="stylesheet" type="text/css" href="{% static "media/css/dataTables.bootstrap.css" %}" />    
         <!-- Custom styles for this template -->
         <link href="{% static "css/style.css" %}" rel="stylesheet">
         <link href="{% static "css/style-responsive.css" %}" rel="stylesheet">
@@ -45,7 +44,7 @@
                 <a href="index.html" class="logo"><b>AXES</b></a>
                 <div class="nav notify-row" id="top_menu">
                     <ul class="nav top-menu">
-                    <li class="dropdown">
+                        <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                             zabbix url
                             <span class="badge bg-theme">{{request.session.length}}</span>
@@ -98,14 +97,34 @@
                         </li>
                         <li class="sub-menu">
                         <a href="javascript:;" >
-                            <i class="fa fa-desktop"></i>
+                            <i class="fa fa-tasks"></i>
                             <span>Zabbix管理</span>
                         </a>
                         <ul class="sub">
-                            <li><a  href="{% url 'isjkgamelisturl' %}"><i class="fa fa-th"></i>项目列表</a></li>
-                            <li><a  href="{% url 'templatelisturl' %}"><i class="fa fa-th"></i>模板列表</a></li>
-                            <li><a  href="{% url 'grouplisturl' %}"><i class="fa fa-th"></i>主机组列表</a></li>
-                            <li><a  href="{% url 'proxylisturl' %}"><i class="fa fa-th"></i>代理列表</a></li>
+                            <li><a  href="{% url 'isjkgamelisturl' %}">项目列表</a></li>
+                            <li><a  href="{% url 'templatelisturl' %}">模板列表</a></li>
+                            <li><a  href="{% url 'grouplisturl' %}">主机组列表</a></li>
+                            <li><a  href="{% url 'proxylisturl' %}">代理列表</a></li>
+                            </li>
+                        </ul>
+                        <li class="sub-menu">
+                        <a href="javascript:;" >
+                            <i class="fa fa-desktop"></i>
+                            <span>维护期间</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a  href="{% url 'createmaintenanceurl' %}">新建维护周期</a></li>
+                            <li><a  href="{% url 'maintenancelisturl' %}">维护周期列表</a></li>
+                            <li><a  href="{% url 'calendarurl' %}">日历</a></li>
+                        </ul>
+                        </li>
+                        <li class="sub-menu">
+                        <a href="javascript:;" >
+                            <i class="fa fa-th"></i>
+                            <span>LOG</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a  href="{% url 'loglisturl' %}"><i class="fa fa-th"></i>log</a></li>
                             </li>
                         </ul>
                         <!-- sidebar menu end-->
@@ -153,36 +172,31 @@
 
             <!--script for this page-->
             <script src="{% static "js/sparkline-chart.js" %}"></script>
-            <script src="{% static "js/zabuto_calendar.js" %}"></script>
             <script src="{% static "media/js/jquery.dataTables.min.js" %}"></script>
             <script src="{% static "media/js/dataTables.bootstrap.js" %}"></script>
-
+            <script src="{% static "dist/DateTimePicker.js" %}"></script>
+            <link rel="stylesheet" type="text/css" href="{% static "dist/DateTimePicker.css" %}" />    
+            <script src="{% static "dist/i18n/DateTimePicker-i18n.js" %}"></script>
             <script type="application/javascript">
                 $(document).ready(function () {
+                        $("#dtBox").DateTimePicker({
+                            init: function()
+                            {
+                                oDTP = this;
+                            },
+                            language: "zh-CN",
+                        });
                         $("#date-popover").popover({html: true, trigger: "manual"});
                         $("#table_id").DataTable();
                         $("#table_id1").DataTable();
+                        $("#table_log").DataTable({
+                                "order": [[4, "desc"]]
+                                });
                         $("#date-popover").hide();
                         $("#date-popover").click(function (e) {
                                 $(this).hide();
                                 });
-                        $("#my-calendar").zabuto_calendar({
-action: function () {
-return myDateFunction(this.id, false);
-},
-action_nav: function () {
-return myNavFunction(this.id);
-},
-ajax: {
-url: "show_data.php?action=1",
-modal: true
-},
-legend: [
-{type: "text", label: "Special event", badge: "00"},
-{type: "block", label: "Regular event", }
-]
-});
-});
+                            });
 function myNavFunction(id) {
     $("#date-popover").hide();
     var nav = $("#" + id).data("navigation");

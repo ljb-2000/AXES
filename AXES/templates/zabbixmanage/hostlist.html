@@ -1,9 +1,9 @@
 {% extends 'base/bases.html' %}
 {% block content %}
 <script type="text/javascript">
-function buttontest(testid){
-    $("#del_id").val(testid);
-}
+    function buttontest(testid){
+        $("#del_id").val(testid);
+    }
 </script>
 <h3><i class="fa fa-angle-right"></i>配置管理</h3>
 <div class="row mt">
@@ -21,13 +21,13 @@ function buttontest(testid){
                                 <th>name</th>
                                 <th>group</th>
                                 <th>proxy</th>
+                                <th>template</th>
                                 <th>status</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for key,value in dict.items %}
-                            {% for i in value %}
+                            {% for i in list %}
                             <tr>
                                 <td>
                                     <span class="check">
@@ -38,10 +38,19 @@ function buttontest(testid){
                                 </td>
                                 <td><a href="{% url 'hostinfourl' i.host%}">{{i.host}}</a></td>
                                 <td><a href="{% url 'hostinfourl' i.host%}">{{i.name}}</a></td>
-                                <td>{{key}}</td>
+                                <td>
+                                    {% for j in i.groups %}
+                                    {{j.name}};
+                                    {% endfor %}
+                                </td>
                                 <td>
                                     {% for j in proxy %}
-                                    {% if j.proxyid == i.proxy_hostid %}{{j.host}}{% endif %}
+                                    {% if j.proxyid == i.proxy_hostid %}{{j.name}}{% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for j in i.parentTemplates %}
+                                    {{j.name}};
                                     {% endfor %}
                                 </td>
                                 <td>{{i.status}}</td>
@@ -50,12 +59,12 @@ function buttontest(testid){
                                 </td>
                             </tr>
                             {% endfor %}
-                            {% endfor %}
                         </tbody>
                     </table>
                     <a  href="{% url 'createhosturl' %}"><input type="button" class="btn btn-theme02" value="创建主机" /></a>
                     <input type="submit" class="btn btn-theme02" name="create" id="create" value="批量创建主机" />
-                    <input type="submit" class="btn btn-theme02" name="update" id="update" value="修改主机" />
+                    <input type="submit" class="btn btn-theme02" name="off_hosts" id="off_hosts" value="禁用监控" />
+                    <input type="submit" class="btn btn-theme02" name="on_hosts" id="on_hosts" value="开启监控" />
                     <input type='submit' class="btn btn-theme02" name="delete" id="delete" value="删除主机" />
                 </section>
             </form>

@@ -4,14 +4,15 @@ from django.db import models
 
 
 class Idc(models.Model):
-    idc_name_cn = models.CharField(max_length=100, null=False)
-    idc_name_py = models.CharField(max_length=100, null=False)
+    idc_name_cn = models.CharField(max_length=100, null=False, unique=True)
+    idc_name_py = models.CharField(max_length=100, null=False, unique=True)
     proxy_name = models.CharField(max_length=100, blank=True)
+    ip = models.CharField(max_length=20, null=False)
 
 
 class Game(models.Model):
-    game_name_cn = models.CharField(max_length=100, null=False)
-    game_name_py = models.CharField(max_length=100, null=False)
+    game_name_cn = models.CharField(max_length=100, null=False, unique=True)
+    game_name_py = models.CharField(max_length=100, null=False, unique=True)
     game_system = models.CharField(max_length=100, blank=True)
 
 

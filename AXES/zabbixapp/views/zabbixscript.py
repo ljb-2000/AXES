@@ -9,6 +9,8 @@ import Queue
 import threading
 import zabbixtools.zabbixapi as zabbixapi
 from systemmanage.models import Idc, Game
+import time
+import re
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -50,47 +52,59 @@ def getDataFromSeal(project_name):
         return json.loads(data.read())
 
 
-def processSealData(url, project_name, queue, template_id, server_state, function):
+def processSealData(url, project_name, queue, template_id, server_state, function, subfunction):
+    print server_state
     data = getDataFromSeal(project_name)
     for i in data:
         if i['wanIpTd']:
+            continue_flag = False
             host_dict = {}
             """在线服后缀无备机，GS、DB、Other根据用户选择定义"""
-            if i['statue'] == 'Online' and 'Online' in server_state:
-                if i['function'] in function:
-                    group_name = '_'.join([project_name, i['function']])
-                else:
-                    continue
-            elif i['statue'] == 'Standby' and 'Standby' in server_state:
-                if i['function'] in function:
-                    group_name = '_'.join([project_name, i['function'], 'beiji'])
+            if i['statue'].capitalize() in server_state:
+                if i['statue'].capitalize() == 'Online':
+                    if i['function'] in function:
+                        group_name = '_'.join([project_name, i['function']])
+                    else:
+                        continue
+                elif i['statue'].capitalize() == 'Standby':
+                    if i['function'] in function:
+                        group_name = '_'.join([project_name, i['function'], 'beiji'])
+                    else:
+                        continue
                 else:
                     continue
             else:
                 continue
+            if i['function'].capitalize() == u'Other':
+                for sub in subfunction:
+                    if re.search(sub, i['subFunction'].capitalize()):
+                        pass
+                    else:
+                        continue_flag = True
+            if continue_flag:
+                continue
             idc_name_cn = ''.join(list(i['idcName'])[0:2]).decode('utf8')
             if idc_name_cn == u'木樨':
                 idc_name_cn = u'木樨园'
+            print idc_name_cn
             idc = Idc.objects.get(idc_name_cn=idc_name_cn)
             game = Game.objects.get(game_name_cn=project_name)
             proxy_name = idc.proxy_name
             idc_name = idc.idc_name_py
             game_name = game.game_name_py
+            ip = idc.ip
             """获取信息，命名host_name 项目_机房_组号_IP"""
             if i['serverGroupNo']:
                 host_name = '_'.join([game_name, idc_name, i['serverGroupNo'], i['wanIpTd']])
             else:
-                if i['subFunction'] == 'Billing':
-                    host_name = '_'.join([game_name, idc_name, i['subFunction'], i['wanIpTd']])
+                if i['function'].capitalize() == u'Other':
+                    sub_str = i['subFunction'] if i['subFunction'] else 'None'
+                    host_name = '_'.join([game_name, idc_name, sub_str, i['wanIpTd']])
                 else:
                     host_name = '_'.join([game_name, idc_name, 'None', i['wanIpTd']])
             """通过机房信息，判断proxy_id"""
             all_proxy_infos = zabbixapi.getProxyInfo(url)['result']
-            if proxy_name == u'None':
-                proxy_id = None
-            else:
-                proxy_id = [proxy_info['proxyid'] for proxy_info in all_proxy_infos if proxy_name == proxy_info['host']][0]
-            print proxy_id
+            proxy_id = None if proxy_name == u'None' else [proxy_info['proxyid'] for proxy_info in all_proxy_infos if proxy_name == proxy_info['host']][0]
             """获取组id，如果存在组，通过zabbix读取，不存在，创建并读取"""
             if group_name:
                 if zabbixapi.isGroup(url, group_name):
@@ -98,30 +112,28 @@ def processSealData(url, project_name, queue, template_id, server_state, functio
                     group_id = group_info['result'][0]['groupid']
                 else:
                     group_info = zabbixapi.createGroup(url, group_name)
-                    group_id = group_info['result']['groupids']
+                    group_id = group_info['result']['groupids'][0]
+            #  print 'group_id: %s' %group_id
             """将数据整合"""
             if group_id and host_name:
                 host_dict['template_id'] = template_id
                 host_dict['group_id'] = group_id
                 host_dict['proxy_id'] = proxy_id
                 host_dict['host_name'] = host_name
-                if i['subFunction'] == 'Billing':
-                    host_dict['host_ip'] = i['lanIpTd']
-                else:
-                    host_dict['host_ip'] = i['wanIpTd']
+                host_dict['host_ip'] = i[ip]
             else:
                 continue
             print host_dict
             queue.put(host_dict)
 
 
-def main(url, project_name, template_id, server_state, function):
+def main(url, project_name, template_id, server_state, function, subfunction):
     queue = Queue.Queue(maxsize=-1)
     for i in xrange(THREAD_NUM):
         thread = MyThread(url, queue)
         thread.setDaemon(True)
         thread.start()
-    processSealData(url, project_name, queue, template_id, server_state, function)
+    processSealData(url, project_name, queue, template_id, server_state, function, subfunction)
     queue.join()
 
 if __name__ == '__main__':

@@ -1,0 +1,313 @@
+{% extends 'base/bases.html' %}
+{% load staticfiles %}
+{% block content %}
+<h3><i class="fa fa-angle-right"></i> zabbix管理</h3>
+<!-- BASIC FORM ELELEMNTS -->
+<div class="row mt mb">
+    <div class="col-md-12">
+        <div class="form-panel">
+            <h4 class="mb"><i class="fa fa-angle-right"></i>creat a maintenance</h4>
+            <form class="form-horizontal style-form" method="post" action="{% url 'createmaintenanceurl' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">name</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="name" class="form-control"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">active-since/active-till</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="date-begin" data-field="datetime" placeholder="active-since" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="date-end" data-field="datetime" placeholder="active-till"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">timeperiod of time period</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="period-selected" name="period">
+                            <option value="0">0-one time only</option>
+                            <option value="2">2-daily</option>
+                            <option value="3">3-weekly</option>
+                            <option value="4">4-monthly</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="month-select">
+                    <label class="col-sm-2 col-sm-2 control-label">月(按control多选)</label>
+                    <div class="col-md-6">
+                        <select multiple class="form-control" name="month">
+                            <option value="1">一月</option>
+                            <option value="2">二月</option>
+                            <option value="3">三月</option>
+                            <option value="4">四月</option>
+                            <option value="5">五月</option>
+                            <option value="6">六月</option>
+                            <option value="7">七月</option>
+                            <option value="8">八月</option>
+                            <option value="9">九月</option>
+                            <option value="10">十月</option>
+                            <option value="11">十一月</option>
+                            <option value="12">十二月</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="dayorweek">
+                    <label class="col-sm-2 col-sm-2 control-label">日期</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="dayorweek-select" name="dayorweek">
+                            <option value="day">日</option>
+                            <option value="week">星期</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="every-day">
+                    <label class="col-sm-2 col-sm-2 control-label">every day(s)</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="every-day"/>
+                    </div>
+                </div>
+                <div class="form-group" id="every-week">
+                    <label class="col-sm-2 col-sm-2 control-label">every week(s)</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="every-week"/>
+                    </div>
+                </div>
+                <div class="form-group" id="every-select">
+                    <label class="col-sm-2 col-sm-2 control-label">第几周</label>
+                    <div class="col-md-6">
+                        <select class="form-control" name="which-week">
+                            <option value="1">1-first week</option>
+                            <option value="2">2-second week</option>
+                            <option value="3">3-third week</option>
+                            <option value="4">4-fourth week</option>
+                            <option value="5">5-last week</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="which-day">
+                    <label class="col-sm-2 col-sm-2 control-label">日期</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="which-day"/>
+                    </div>
+                </div>
+                <div class="form-group" id="day-of-week">
+                    <label class="col-sm-2 col-sm-2 control-label">day of week(按control多选)</label>
+                    <div class="col-md-6">
+                        <select multiple class="form-control" name="day-of-week">
+                            <option value="1">周一</option>
+                            <option value="2">周二</option>
+                            <option value="3">周三</option>
+                            <option value="4">周四</option>
+                            <option value="5">周五</option>
+                            <option value="6">周六</option>
+                            <option value="7">周日</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">开始时间</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" data-field="time"  id="start-time" name="start-time"/>
+                        <input type="text" class="form-control" data-field="datetime"  id="start-time-date" name="start-time-date"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">持续时间(单位：分)</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="duration" name="duration" placeholder="default: 120m" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">project</label>
+                    <div class="col-md-6">
+                        <select class="form-control" name="project_name" id="project-select">
+                            <option>------------------</option>
+                            {% for i in project_list %}
+                            <option value="{{i.game_name_cn}}">{{i.game_name_cn}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">group(自选主机可不选该项)</label>
+                </div>
+                <table class="table table-bordered table-striped table-condensed">
+                    <div class="row-fluid" id="group">
+                    </div>
+                </table>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">主机(默认全选)</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="choose-hosts" name="choose-hosts">
+                            <option value="allhosts">全选----无需选择主机</option>
+                            <option value="somehosts">自选----所选主机若在已选择的组中无效</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="table-div">
+                    <table id="table-id" class="table table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>host</th>
+                                <th>name</th>
+                                <th>group</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <button type="submit" name="create" class="btn btn-theme02">保存</button>
+                        <input type="button" class="btn btn-theme02" onclick="javascript:history.back(-1);" value="返回上一页" />
+                    </div>
+                </div>
+                <div id="dtBox"></div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{% static "js/jquery.js" %}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){ 
+        $('#every-select').hide();
+        $('#every-day').hide();
+        $('#every-week').hide();
+        $('#dayorweek').hide();
+        $('#start-time').hide();
+        $('#start-time-date').show();
+        $('#which-day').hide();
+        $('#day-of-week').hide();
+        $('#month-select').hide();
+        $('#table-div').hide();
+        $("#dtBox").DateTimePicker({
+            init: function()
+            {
+                oDTP = this;
+            },
+            language: "zh-CN",
+        });
+        $('#choose-hosts').change(function(){
+            var p1=$(this).children('option:selected').val();
+            if(p1=='somehosts'){
+            $('#table-div').show();
+            }
+            else if(p1=='allhosts'){
+            $('#table-div').hide();
+            }
+        });
+        $('#dayorweek-select').change(function(){
+            var p1=$(this).children('option:selected').val();
+            if(p1=='day'){
+                $('#every-select').show();
+                $('#day-of-week').hide();
+                $('#which-day').show();
+                $('#every-day').hide();
+                $('#every-week').hide();
+            }
+            else if(p1=='week'){
+                $('#every-select').show();
+                $('#day-of-week').show();
+                $('#which-day').hide();
+                $('#every-day').hide();
+                $('#every-week').hide();
+            }
+        });
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+        $('#project-select').change(function(){
+            var p1=$(this).children('option:selected').val();
+            $.ajax({
+                type: "post",
+                url: "{% url 'groupinprojecturl' %}",
+                data: {'PROJECT': p1},
+                dataType: "json",
+                success:function(result){
+                    var long_str = ""
+                    var label_begin = "<label class='checkbox-inline'>"
+                    var label_end = "</label>"
+                    var div_begin = "<div class='col-xs-3 span3'>"
+                    var div_end = "</div>"
+                    var data = result['hosts']
+                    var group = result['group']
+                    for(i in group){
+                        var str = "<input type='checkbox' name='group_id' id='group_name_check' value=" + group[i]['groupid'] + ">" + group[i]['name'] + "</input>"
+                        long_str = long_str + div_begin + label_begin + str + label_end + div_end
+                    }
+                    $('#group').html(long_str)
+                    var datatables = $('#table-id').DataTable({
+                        "bDestroy": true,
+                        'data': data,
+                        'columns':[
+                            {
+                                'title': 'host',
+                                'render': function(host){
+                                    return '<span class="check"> <input class="check" type="checkbox" name="host_list" value="' +host+ '"></input></span>' + host;
+                                },
+                                /* 'bSortable': false, 禁止排序 */
+                            },
+                            {
+                                'title': 'name'
+                            },
+                            {
+                                'title': 'group'
+                            },
+                        ]
+                    })
+                    datatables.fnClearTable();
+                    $('#table-id').dataTable({"bDestroy":true});
+                },
+                });
+            });
+        $('#period-selected').change(function(){ 
+            var p1=$(this).children('option:selected').val();
+            if(p1==0){
+                $('#start-time-date').show();
+                $('#start-time').hide();
+                $('#day-of-week').hide();
+                $('#month-select').hide();
+                $('#every-select').hide();
+                $('#dayorweek').hide();
+                $('#every-day').hide();
+                $('#every-week').hide();
+                $('#which-day').hide();
+            }
+            else if(p1==2){
+                $('#start-time').show();
+                $('#day-of-week').hide();
+                $('#start-time-date').hide();
+                $('#month-select').hide();
+                $('#every-select').hide();
+                $('#dayorweek').hide();
+                $('#every-day').show();
+                $('#every-week').hide();
+                $('#which-day').hide();
+            }
+            else if(p1==3){
+                $('#start-time').show();
+                $('#day-of-week').show();
+                $('#start-time-date').hide();
+                $('#month-select').hide();
+                $('#every-select').hide();
+                $('#dayorweek').hide();
+                $('#every-day').hide();
+                $('#every-week').show();
+                $('#which-day').hide();
+            }
+            else{
+                $('#start-time-date').hide();
+                $('#start-time').show();
+                $('#month-select').show();
+                $('#dayorweek').show();
+                $('#which-day').show();
+                $('#day-of-week').hide();
+                $('#every-day').hide();
+                $('#every-week').hide();
+            }
+    }); 
+}) 
+</script>
+{% endblock %}

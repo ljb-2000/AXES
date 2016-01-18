@@ -42,7 +42,7 @@ class addGameForm(forms.ModelForm):
 class addIdcForm(forms.ModelForm):
     class Meta:
         model = Idc
-        fields = ('idc_name_cn', 'idc_name_py', 'proxy_name')
+        fields = ('idc_name_cn', 'idc_name_py', 'proxy_name', 'ip')
         widgets = {
             'idc_name_cn': forms.TextInput(
                 attrs={
@@ -62,6 +62,12 @@ class addIdcForm(forms.ModelForm):
                     'placeholder': u'请输入代理名'
                 }
             ),
+            'ip': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                },
+                choices=(('lanIpTd', 'lanIpTd'), ('wanIpTd', 'wanIpTd'))
+            ),
         }
 
     def __init__(self, *args, **kwargs):
@@ -71,6 +77,7 @@ class addIdcForm(forms.ModelForm):
         self.fields['idc_name_py'].label = u'IDC拼音简写'
         self.fields['idc_name_py'].error_messages = {'required': u'该项不能为空'}
         self.fields['proxy_name'].label = u'代理'
+        self.fields['ip'].label = u'内网or外网'
 
 
 class addUrlForm(forms.ModelForm):

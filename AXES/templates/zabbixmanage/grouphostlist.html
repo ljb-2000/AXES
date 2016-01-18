@@ -9,7 +9,7 @@
 <div class="row mt">
     <div class="col-lg-12">
         <div class="content-panel">
-            <h4><i class="fa fa-angle-right"></i> 主机列表(所属组：{{game_name}})</h4>
+            <h4><i class="fa fa-angle-right"></i> 主机列表(所属组：{{group_name}})</h4>
             <form class="form-horizontal style-form" method="post" action="{% url "managehosturl" game_name %}">
                 {% csrf_token %}
                 <section id="unseen">
@@ -57,7 +57,8 @@
                         <input id="game_list" name="game_list" type="checkbox" checked="checked" value="{{game_name}}" style="display:none"/>
                         <input id="group_list" name="group_list" type="hidden" value="{{group_name}}"/>
                     </table>
-                    <input type="submit" class="btn btn-theme02" name="create" id="create" value="新建主机" />
+                    <a  href="{% url 'createhosturl' %}"><input type="button" class="btn btn-theme02" value="创建主机" /></a>
+                    <input type="submit" class="btn btn-theme02" name="create" id="create" value="批量创建主机" />
                     <input type="submit" class="btn btn-theme02" name="update" id="update" value="修改主机" />
                     <input type='submit' class="btn btn-theme02" name="delete" id="delete" value="删除主机" />
                 </section>

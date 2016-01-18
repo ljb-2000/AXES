@@ -134,6 +134,7 @@ def delUrlView(request):
 
 def encrypt(password):
     password = password + '\0' * (16 - len(password)) if len(password) < 16 else password
+    print len(password)
     cryptor = AES.new(key, AES.MODE_CBC, the_salt)
     cryptor_text = cryptor.encrypt(password)
     return b2a_hex(cryptor_text)

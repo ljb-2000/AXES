@@ -33,10 +33,6 @@
                         {% for i in list %}
                         <tr>
                             <td>
-                                <span class="check">
-                                    <input name="game_list" type="checkbox" class="checked" value="{{i.id}}">
-                                    </input>
-                                </span>
                                 <a href="{% url 'hostlisturl' i.game_name_cn %}">{{i.game_name_cn}}</a>
                             </td>
                             <td>{{i.game_name_py}}</td>
