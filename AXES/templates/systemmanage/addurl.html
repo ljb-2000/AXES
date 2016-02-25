@@ -1,34 +1,28 @@
 {% extends 'base/bases.html' %}
 {% block content %}
-<h3><i class="fa fa-angle-right"></i> 配置管理</h3>
+<h5><i class="fa fa-angle-right"></i> 配置管理----新增Zabbix server</h5>
+<br />
 <!-- BASIC FORM ELELEMNTS -->
-<div class="row mt">
-    <div class="col-lg-12">
-        <div class="form-panel">
-            <h4 class="mb"><i class="fa fa-angle-right"></i> 新增url</h4>
-            <form class="form-horizontal style-form" method="post" action="{% url 'addurlurl' %}">
-                {% csrf_token %}
-                {% for item in form %}
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">{{item.label}}</label>
-                    <div class="col-sm-10">
-                        {{item}}
-                        {% if item.errors %}
-                        <div class="alert alert-danger">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{item.errors}}
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-                <div class="form-group">
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn btn-theme02">新增IDC</button>
-                    </div>
-                </div>
-            </form>
+<form class="form-horizontal style-form" method="post" action="{% url 'addurlurl' %}">
+    {% csrf_token %}
+    {% for item in form %}
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">{{item.label}}</label>
+        <div class="col-sm-10">
+            {{item}}
+            {% if item.errors %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{item.errors}}
+            </div>
+            {% endif %}
         </div>
     </div>
-</div>
+    {% endfor %}
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-theme02">新增IDC</button>
+        </div>
+    </div>
+</form>
 {% endblock %}

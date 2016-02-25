@@ -1,89 +1,84 @@
 {% extends 'base/bases.html' %}
 {% block content %}
-<h3><i class="fa fa-angle-right"></i>维护期间</h3>
-<div class="row mt">
-    <div class="col-lg-12">
-        <div class="form-panel">
-            <div class="tabbable" id="tabs-284513">
-                <ul class="nav nav-tabs">
-                    <li class='active'>
-                    <a href="#this_month" data-toggle="tab">本月</a>
-                    </li>
-                    <li>
-                    <a href="#next_month" data-toggle="tab">下月</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div id='this_month' class='tab-pane active'>
-                        <h4><i class="fa fa-angle-right"></i> {{this_month}}月</h4>
-                        <table class="table table-bordered table-striped table-condensed">
-                            <thead>
-                                <tr>
-                                    <th>day</th>
-                                    <th>week</th>
-                                    <th>job</th>
-                                    <th>maintenance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for i in this_month_list %}
-                                <tr>
-                                    <td>{{i.day}}</td>
-                                    <td>
-                                        周{{i.weekchinese}}
-                                    </td>
-                                    <td>{{i.job}}个任务</td>
-                                    <td>
-                                        {% for j in i.maintenance %}
-                                        {% for k, v in j.items %}
-                                        {{k}}:{{v}}
-                                        <br />
-                                        {% endfor %}
-                                        -------------------------
-                                        <br />
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id='next_month' class='tab-pane'>
-                        <h4><i class="fa fa-angle-right"></i> {{next_month}}月</h4>
-                        <table class="table table-bordered table-striped table-condensed">
-                            <thead>
-                                <tr>
-                                    <th>day</th>
-                                    <th>week</th>
-                                    <th>job</th>
-                                    <th>maintenance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for i in next_month_list %}
-                                <tr>
-                                    <td>{{i.day}}</td>
-                                    <td>
-                                        周{{i.weekchinese}}
-                                    </td>
-                                    <td>{{i.job}}个任务</td>
-                                    <td>
-                                        {% for j in i.maintenance %}
-                                        {% for k, v in j.items %}
-                                        {{k}}:{{v}}
-                                        <br />
-                                        {% endfor %}
-                                        -------------------------
-                                        <br />
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+<h4><i class="fa fa-angle-right"></i>维护期间----日历</h4>
+<br />
+<div class="tabbable" id="tabs-284513">
+    <ul class="nav nav-tabs">
+        <li class='active'>
+        <a href="#this_month" data-toggle="tab">本月</a>
+        </li>
+        <li>
+        <a href="#next_month" data-toggle="tab">下月</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id='this_month' class='tab-pane active'>
+            <h4><i class="fa fa-angle-right"></i> {{this_month}}月</h4>
+            <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th>day</th>
+                        <th>week</th>
+                        <th>job</th>
+                        <th>maintenance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in this_month_list %}
+                    <tr>
+                        <td>{{i.day}}</td>
+                        <td>
+                            周{{i.weekchinese}}
+                        </td>
+                        <td>{{i.job}}个任务</td>
+                        <td>
+                            {% for j in i.maintenance %}
+                            {% for k, v in j.items %}
+                            {{k}}:{{v}}
+                            <br />
+                            {% endfor %}
+                            -------------------------
+                            <br />
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id='next_month' class='tab-pane'>
+            <h4><i class="fa fa-angle-right"></i> {{next_month}}月</h4>
+            <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th>day</th>
+                        <th>week</th>
+                        <th>job</th>
+                        <th>maintenance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in next_month_list %}
+                    <tr>
+                        <td>{{i.day}}</td>
+                        <td>
+                            周{{i.weekchinese}}
+                        </td>
+                        <td>{{i.job}}个任务</td>
+                        <td>
+                            {% for j in i.maintenance %}
+                            {% for k, v in j.items %}
+                            {{k}}:{{v}}
+                            <br />
+                            {% endfor %}
+                            -------------------------
+                            <br />
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

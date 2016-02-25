@@ -1,7 +1,7 @@
 # encoding: utf-8
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, HttpResponse
-from systemmanage.models import Game, ZabbixUrl
+from systemmanage.models import Game, ZabbixUrl, Idc
 import zabbixtools.zabbixapi as zabbixapi
 import zabbixscript
 import zabbixtools.models_mongodb as db
@@ -15,9 +15,11 @@ import time
 import calendar
 import datetime
 import json
+import os
 
 reload(sys)
 sys.setdefaultencoding('utf8')
+path = os.getcwd()
 
 CHINESE_ENGILSH = {
     1: u'一',
@@ -41,8 +43,11 @@ def getCookieUrl(request):
 def getUrlView(request, URL):
     if URL:
         url = "http://" + URL + "/api_jsonrpc.php"
+    else:
+        URL = "123.59.6.164"
     httpresponse = HttpResponseRedirect(reverse('isjkgamelisturl'))
     httpresponse.set_cookie(key="url", value=url)
+    httpresponse.set_cookie(key="ip", value=URL)
     return httpresponse
 
 
@@ -284,7 +289,8 @@ def hostListView(request, GNAME):
 
 def groupHostListView(request, GNAME):
     url = getCookieUrl(request)
-    host_list = db.getHost(url, group_name=GNAME)
+    group_name = db.getGroup(url, group_id=GNAME)['name']
+    host_list = db.getHost(url, group_name=group_name)
     result = db.getProxy(url)
     game_name = GNAME.split('_')[0]
     proxy = []
@@ -470,6 +476,7 @@ def maintenanceListView(request):
         maintenance_dict['hosts'] = host_list
         maintenance_dict['status'] = i['status']
         maintenance_list.append(maintenance_dict)
+    #  print maintenance_list
     context_dict = {
         'list': maintenance_list,
     }
@@ -478,7 +485,7 @@ def maintenanceListView(request):
 
 def calendarView(request):
     url = getCookieUrl(request)
-    print request.method
+    #  print request.method
     today = datetime.date.today()
     this_year = today.year
     this_month = today.month
@@ -543,8 +550,8 @@ def makeCalendarList(this_month_list, year, month, url):
                         flag -= 1
                         if k == '1':
                             dayofweek_list.append(str(flag))
-                    print dayofweek_list
-                    print todayWeek(year, month, i)
+                    #  print dayofweek_list
+                    #  print todayWeek(year, month, i)
                     if str(todayWeek(year, month, i)) in dayofweek_list:
                         num += 1
                         tmp_dict['maintenancename'] = j['name']
@@ -670,13 +677,64 @@ def createMaintenanceView(request):
             if 'result' in result:
                 document['status'] = 0
                 db.createMaintenance(url, document)
-        return HttpResponseRedirect(reverse('createmaintenanceurl'))
+        return HttpResponseRedirect(reverse('maintenancelisturl'))
     else:
         project_list = Game.objects.all()
     context_dict = {
         'project_list': project_list,
     }
     return render(request, 'zabbixmanage/createmaintenance.html', context_dict)
+
+
+def delMaintenanceView(request, MNAME):
+    url = getCookieUrl(request)
+    MID = zabbixapi.getMaintenance(url, maintenance_name=MNAME)['result'][0]['maintenanceid']
+    zabbixapi.delMaintenance(url, [MID])
+    return HttpResponseRedirect(reverse('maintenancelisturl'))
+
+
+def notDeployAndHostViews(request, PNAME):
+    url = getCookieUrl(request)
+    zabbix_host = db.regexGetHost(url, PNAME)
+    project_list = getDataFromTxt()
+    project_info = json.loads(project_list[0])
+    db_host = [i['wanIpTd'].split(';')[0] for i in project_info[PNAME] if i['function'].upper() == 'DB']
+    deploy_host = [i['name'].split('_')[3].split(';')[0] for i in zabbix_host]
+    all_host = [i['wanIpTd'].split(';')[0] for i in project_info[PNAME]]
+    not_deploy = [val for val in all_host if val not in deploy_host]
+    context_dict = {
+        'dbhostlist': db_host,
+        'notdeploylist': not_deploy,
+        'PNAME': PNAME,
+    }
+    return render(request, 'zabbixmanage/notdeployanddb.html', context_dict)
+
+
+def sealAndZabbixViews(request):
+    url = getCookieUrl(request)
+    dicts = {}
+    project_list = getDataFromTxt()
+    project_info = json.loads(project_list[0])
+    for key in project_info:
+        all_host_len = 0
+        len_of_db = 0
+        zabbix_host = db.regexGetHost(url, key)
+        len_of_zabbix_host = 0
+        for i in zabbix_host:
+            len_of_zabbix_host += 1
+        all_host_len = len(project_info[key])
+        len_of_db = len([j['wanIpTd'] for j in project_info[key] if j['function'].upper() == 'DB'])
+        dicts[key] = [all_host_len, len_of_zabbix_host, all_host_len - len_of_zabbix_host, len_of_db]
+    context_dict = {
+        'dict': dicts,
+    }
+    return render(request, 'zabbixmanage/sealandzabbix.html', context_dict)
+
+
+def getDataFromTxt():
+    with open(os.path.join(path, 'zabbixtools/hostlist.txt'), 'r') as f:
+        project_list = f.readlines()
+    return project_list
 
 
 def groupInProjectView(request):
@@ -707,10 +765,11 @@ def groupInProjectView(request):
 
 @csrf_exempt
 def startMaintenanceView(request):
-    print request.method
+    #  print request.method
     if request.method == 'POST':
         try:
             url = request.POST.get('url')
+            URL = url
             url = "http://" + url + "/api_jsonrpc.php"
             maintenance_name = request.POST.get('name')
             start_time = int(request.POST.get('start'))
@@ -722,7 +781,7 @@ def startMaintenanceView(request):
             status = maintenance_info['status']
             if status == 1:
                 error = zabbixapi.processLogData('start maintenance', {'maintenance_name': maintenance_name}, url, {'info': "状态已经为1"}, 'error')
-                db.insertLog(log=error)
+                db.insertLog(URL, log=error)
                 return HttpResponse('start error! already start')
         except Exception, e:
             return HttpResponse('start error! %s' %e)
@@ -742,6 +801,7 @@ def stopMaintenanceView(request):
     if request.method == 'POST':
         try:
             url = request.POST.get('url')
+            URL = url
             url = "http://" + url + "/api_jsonrpc.php"
             maintenance_name = request.POST.get('name')
             end_time = int(request.POST.get('end'))
@@ -749,7 +809,7 @@ def stopMaintenanceView(request):
             status = maintenance_info['status']
             if status == 0:
                 error = zabbixapi.processLogData('stop maintenance', {'maintenance_name': maintenance_name}, url, {"info": "状态已经为0"}, 'error')
-                db.insertLog(log=error)
+                db.insertLog(URL, log=error)
                 return HttpResponse('stop error! already stop')
         except Exception, e:
             return HttpResponse('stop error! %s' %e)

@@ -53,10 +53,13 @@ def getDataFromSeal(project_name):
 
 
 def processSealData(url, project_name, queue, template_id, server_state, function, subfunction):
-    print server_state
     data = getDataFromSeal(project_name)
     for i in data:
         if i['wanIpTd']:
+            if zabbixapi.isHostExist(url, host=i['wanIpTd']):
+                continue
+            elif zabbixapi.isHostExist(url, host=i['lanIpTd']):
+                continue
             continue_flag = False
             host_dict = {}
             """在线服后缀无备机，GS、DB、Other根据用户选择定义"""
@@ -86,7 +89,6 @@ def processSealData(url, project_name, queue, template_id, server_state, functio
             idc_name_cn = ''.join(list(i['idcName'])[0:2]).decode('utf8')
             if idc_name_cn == u'木樨':
                 idc_name_cn = u'木樨园'
-            print idc_name_cn
             idc = Idc.objects.get(idc_name_cn=idc_name_cn)
             game = Game.objects.get(game_name_cn=project_name)
             proxy_name = idc.proxy_name
@@ -113,7 +115,6 @@ def processSealData(url, project_name, queue, template_id, server_state, functio
                 else:
                     group_info = zabbixapi.createGroup(url, group_name)
                     group_id = group_info['result']['groupids'][0]
-            #  print 'group_id: %s' %group_id
             """将数据整合"""
             if group_id and host_name:
                 host_dict['template_id'] = template_id

@@ -1,0 +1,42 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<h5><i class="fa fa-angle-right"></i> 用户管理----新增用户</h5>
+<br />
+<!-- BASIC FORM ELELEMNTS -->
+<form class="form-horizontal style-form" method="post" action="{% url 'adduserurl' %}">
+    {% csrf_token %}
+    {% for user_item in user_form %}
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">{{user_item.label}}</label>
+        <div class="col-sm-10">
+            {{user_item}}
+            {% if user_item.errors %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{user_item.errors}}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    {% for profile_item in profile_form %}
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">{{profile_item.label}}</label>
+        <div class="col-sm-10">
+            {{profile_item}}
+            {% if profile_item.errors %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{profile_item.errors}}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-theme02">新增用户</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

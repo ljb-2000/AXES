@@ -1,0 +1,30 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<h4><i class="fa fa-angle-right"></i>zabbix管理----主机比对</h4>
+<br />
+    <section id="unseen">
+        <table id="table_id" class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>项目</th>
+                    <th>机器总数</th>
+                    <th>已部署机器</th>
+                    <th>未部署机器</th>
+                    <th>DB数量</th>
+                    <!--<th>实际维护数</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in dict.items %}
+                <tr>
+                    <td>{{key}}</td>
+                    <td>{{value.0}}</td>
+                    <td>{{value.1}}</td>
+                    <td><a href="{% url 'notdeployhostlisturl' key%}">{{value.2}}</a></td>
+                    <td><a href="{% url 'notdeployhostlisturl' key%}">{{value.3}}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

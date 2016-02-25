@@ -2,14 +2,14 @@
 # encoding: utf-8
 
 import pymongo
-import scriptzabbixapi as zabbixapi
+import zabbixapi as zabbixapi
 import MySQLdb
 
 
 def getIPList():
     ip = []
     try:
-        conn = MySQLdb.connect(host='localhost', user="root", passwd="root", db="AXESDatabases", port=3306)
+        conn = MySQLdb.connect(host='127.0.0.1', user="root", passwd="root", db="AXESDatabases", port=3306)
         cur = conn.cursor()
         sql_str = "select url from systemmanage_zabbixurl;"
         cur.execute(sql_str)
@@ -32,6 +32,7 @@ def saveHostData(ip, url):
     db = connDB()
     collections = 'zabbix' + ip.split('.')[3].split(':')[0]
     result = zabbixapi.getHostInfo(url)['result']
+    print result
     hosts = db[collections].host
     hosts.insert(result)
 

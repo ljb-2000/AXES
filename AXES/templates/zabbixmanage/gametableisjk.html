@@ -5,50 +5,45 @@
         $("#del_names").val(testid);
     }
 </script>
-<h3><i class="fa fa-angle-right"></i>配置管理</h3>
-<div class="row mt">
-    <div class="col-lg-12">
-        <div class="content-panel">
-            <ul class="nav nav-tabs">
-                <li class="active">
-                <a href="{% url "isjkgamelisturl" %}"><h5><i class="fa fa-angle-right"></i> 已被监控</h5></a>
-                </li>
-                <li>
-                <a href="{% url "notjkgamelisturl" %}"><h5><i class="fa fa-angle-right"></i>暂未监控</h5></a>
-                </li>
-            </ul>
-            <br />
-            {% csrf_token %}
-            <section id="unseen">
-                <table id="table_id" class="table table-bordered table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th>游戏</th>
-                            <th>简写</th>
-                            <th>系统</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in list %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'hostlisturl' i.game_name_cn %}">{{i.game_name_cn}}</a>
-                            </td>
-                            <td>{{i.game_name_py}}</td>
-                            <td>{{i.game_system}}</td>
-                            <td>
-                                <button type="button" id="{{i.game_name_cn}}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal-edit" onclick="return buttontest(this.id)"><i class="fa fa-pencil"></i></button>
-                                <button type="button" id="{{i.game_name_cn}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-delete" onclick="return buttontest(this.id)"><i class="fa fa-trash-o"></i></button>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </section>
-        </div><!-- /content-panel -->
-    </div><!-- /col-lg-4 -->
-</div><!-- /row -->
+<h4><i class="fa fa-angle-right"></i>Zabbix管理----已监控项目列表</h4>
+<br />
+<ul class="nav nav-tabs">
+    <li class="active">
+    <a href="{% url "isjkgamelisturl" %}">已被监控</a>
+    </li>
+    <li>
+    <a href="{% url "notjkgamelisturl" %}">暂未监控</a>
+    </li>
+</ul>
+<br />
+{% csrf_token %}
+<section id="unseen">
+    <table id="table_id" class="table table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>游戏</th>
+                <th>简写</th>
+                <th>系统</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in list %}
+            <tr>
+                <td>
+                    <a href="{% url 'hostlisturl' i.game_name_cn %}">{{i.game_name_cn}}</a>
+                </td>
+                <td>{{i.game_name_py}}</td>
+                <td>{{i.game_system}}</td>
+                <td>
+                    <button type="button" id="{{i.game_name_cn}}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal-edit" onclick="return buttontest(this.id)"><i class="fa fa-pencil"></i></button>
+                    <button type="button" id="{{i.game_name_cn}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-delete" onclick="return buttontest(this.id)"><i class="fa fa-trash-o"></i></button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
 <form class="form-horizontal style-form" method="post" action="">
     {% csrf_token %}
 

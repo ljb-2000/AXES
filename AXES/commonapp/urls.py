@@ -7,4 +7,5 @@ from commonapp import views
 urlpatterns = patterns(
     '',
     url(r'^log/$', views.logView, name='loglisturl'),
+    url(r'^usermanage/adduser/$', views.addUserView, name='adduserurl'),
 )

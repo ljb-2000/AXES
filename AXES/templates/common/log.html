@@ -1,53 +1,46 @@
 {% extends 'base/bases.html' %}
 {% block content %}
-<h3><i class="fa fa-angle-right"></i>zabbix管理</h3>
-<div class="row mt">
-    <div class="col-lg-12">
-        <div class="content-panel">
-            <h4><i class="fa fa-angle-right"></i> 日志</h4>
-            <section id="unseen">
-                <table id="table_log" class="table table-bordered table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th>日志类型</th>
-                            <th>zabbix服务器</th>
-                            <th>信息</th>
-                            <th>详情</th>
-                            <th>日期</th>
-                            <th>结果</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in log%}
-                        <tr>
-                            <td>{{i.type}}</td>
-                            <td>{{i.url}}</td>
-                            <td>
-                                {% for key, value in i.info.items %}
-                                {{key}}:{{value}}
-                                <br />
-                                {% endfor %}
-                            </td>
-                            <td>
-                                {% for key, value in i.detail.items %}
-                                {{key}}:{{value}}
-                                <br />
-                                {% endfor %}
-                            </td>
-                            <td>{{i.date}}</td>
-                            <td>
-                                {% if i.result == 'success' %}
-                                <span class="label label-success label-mini">{{i.result}}</span>
-                                {% else %}
-                                <span class="label label-danger label-mini">{{i.result}}</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </section>
-        </div><!-- /content-panel -->
-    </div><!-- /col-lg-4 -->
-</div><!-- /row -->
+<h4><i class="fa fa-angle-right"></i> 日志管理----日志</h4>
+<section id="unseen">
+    <table id="table_log" class="table table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>日志类型</th>
+                <th>zabbix服务器</th>
+                <th>信息</th>
+                <th>详情</th>
+                <th>日期</th>
+                <th>结果</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in log%}
+            <tr>
+                <td>{{i.type}}</td>
+                <td>{{i.url}}</td>
+                <td>
+                    {% for key, value in i.info.items %}
+                    {{key}}:{{value}}
+                    <br />
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for key, value in i.detail.items %}
+                    {{key}}:{{value}}
+                    <br />
+                    {% endfor %}
+                </td>
+                <td>{{i.date}}</td>
+                <td>
+                    {% if i.result == 'success' %}
+                    <span class="label label-success label-mini">{{i.result}}</span>
+                    {% else %}
+                    <span class="label label-danger label-mini">{{i.result}}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
 {% endblock %}

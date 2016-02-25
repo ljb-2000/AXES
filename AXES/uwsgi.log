@@ -1,0 +1,1090 @@
+*** Starting uWSGI 2.0.12 (64bit) on [Thu Jan 21 11:44:36 2016] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-16) on 20 January 2016 10:37:53
+os: Linux-2.6.32-431.el6.x86_64 #1 SMP Sun Nov 10 22:19:54 EST 2013
+nodename: BJ-MXY-2-164.com
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/AXES
+writing pidfile to /home/AXES/uwsgi.pid
+detected binary path: /usr/local/python/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/AXES
+your processes number limit is 127307
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8888 fd 3
+Python version: 2.7.6 (default, Nov 24 2015, 15:20:07)  [GCC 4.4.7 20120313 (Red Hat 4.4.7-16)]
+Python main interpreter initialized at 0x1c4c480
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 724480 bytes (707 KB) for 32 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x1c4c480 pid: 16584 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 16584)
+spawned uWSGI worker 1 (pid: 16597, cores: 8)
+spawned uWSGI worker 2 (pid: 16598, cores: 8)
+spawned uWSGI worker 3 (pid: 16604, cores: 8)
+spawned uWSGI worker 4 (pid: 16610, cores: 8)
+[pid: 16610|app: 0|req: 1/1] 111.206.12.22 () {42 vars in 1013 bytes} [Thu Jan 21 11:44:40 2016] GET /zabbixmanage/hostlist/groupname=%E6%A1%83%E5%9B%AD_GS/ => generated 308918 bytes in 818 msecs (HTTP/1.1 500) 3 headers in 106 bytes (1 switches on core 0)
+[pid: 16598|app: 0|req: 1/2] 111.206.12.22 () {42 vars in 1013 bytes} [Thu Jan 21 11:44:42 2016] GET /zabbixmanage/hostlist/groupname=%E6%A1%83%E5%9B%AD_GS/ => generated 308912 bytes in 743 msecs (HTTP/1.1 500) 3 headers in 106 bytes (1 switches on core 0)
+[pid: 16610|app: 0|req: 2/3] 111.206.12.22 () {42 vars in 1013 bytes} [Thu Jan 21 11:44:44 2016] GET /zabbixmanage/hostlist/groupname=%E6%A1%83%E5%9B%AD_GS/ => generated 308923 bytes in 616 msecs (HTTP/1.1 500) 3 headers in 106 bytes (1 switches on core 1)
+[pid: 16598|app: 0|req: 2/4] 111.206.12.22 () {42 vars in 1013 bytes} [Thu Jan 21 11:45:23 2016] GET /zabbixmanage/hostlist/groupname=%E6%A1%83%E5%9B%AD_GS/ => generated 308921 bytes in 612 msecs (HTTP/1.1 500) 3 headers in 106 bytes (1 switches on core 5)
+[pid: 16598|app: 0|req: 3/5] 111.206.12.22 () {42 vars in 1013 bytes} [Thu Jan 21 11:46:28 2016] GET /zabbixmanage/hostlist/groupname=%E6%A1%83%E5%9B%AD_GS/ => generated 308923 bytes in 667 msecs (HTTP/1.1 500) 3 headers in 106 bytes (1 switches on core 1)
+[pid: 16604|app: 0|req: 1/6] 111.206.12.22 () {38 vars in 822 bytes} [Thu Jan 21 11:46:45 2016] GET / => generated 2483 bytes in 121 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 16604|app: 0|req: 2/7] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:48:39 2016] GET / => generated 2483 bytes in 9 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 6)
+[pid: 16610|app: 0|req: 3/8] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:48:40 2016] GET / => generated 2483 bytes in 10 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 6)
+Thu Jan 21 11:48:58 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:48:58 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+*** Starting uWSGI 2.0.12 (64bit) on [Thu Jan 21 11:49:05 2016] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-16) on 20 January 2016 10:37:53
+os: Linux-2.6.32-431.el6.x86_64 #1 SMP Sun Nov 10 22:19:54 EST 2013
+nodename: BJ-MXY-2-164.com
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/AXES
+writing pidfile to /home/AXES/uwsgi.pid
+detected binary path: /usr/local/python/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/AXES
+your processes number limit is 127307
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8888 fd 3
+Python version: 2.7.6 (default, Nov 24 2015, 15:20:07)  [GCC 4.4.7 20120313 (Red Hat 4.4.7-16)]
+Python main interpreter initialized at 0x2839480
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 724480 bytes (707 KB) for 32 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x2839480 pid: 16900 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 16900)
+spawned uWSGI worker 1 (pid: 16913, cores: 8)
+spawned uWSGI worker 2 (pid: 16914, cores: 8)
+spawned uWSGI worker 3 (pid: 16915, cores: 8)
+spawned uWSGI worker 4 (pid: 16921, cores: 8)
+[pid: 16921|app: 0|req: 1/1] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:49:07 2016] GET / => generated 126028 bytes in 432 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 0)
+[pid: 16914|app: 0|req: 1/2] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:50:31 2016] GET / => generated 126028 bytes in 431 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 0)
+[pid: 16913|app: 0|req: 1/3] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:52:50 2016] GET / => generated 126028 bytes in 447 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 0)
+[pid: 16921|app: 0|req: 2/4] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:54:33 2016] GET / => generated 126033 bytes in 314 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 2)
+[pid: 16913|app: 0|req: 2/5] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:55:50 2016] GET / => generated 126033 bytes in 313 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 5)
+Thu Jan 21 11:56:26 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kiThu Jan 21 11:56:26 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 11:56:26 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+*** Starting uWSGI 2.0.12 (64bit) on [Thu Jan 21 11:56:35 2016] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-16) on 20 January 2016 10:37:53
+os: Linux-2.6.32-431.el6.x86_64 #1 SMP Sun Nov 10 22:19:54 EST 2013
+nodename: BJ-MXY-2-164.com
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/AXES
+writing pidfile to /home/AXES/uwsgi.pid
+detected binary path: /usr/local/python/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/AXES
+your processes number limit is 127307
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8888 fd 3
+Python version: 2.7.6 (default, Nov 24 2015, 15:20:07)  [GCC 4.4.7 20120313 (Red Hat 4.4.7-16)]
+Python main interpreter initialized at 0x1c1a490
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 724480 bytes (707 KB) for 32 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x1c1a490 pid: 17626 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 17626)
+spawned uWSGI worker 1 (pid: 17649, cores: 8)
+spawned uWSGI worker 2 (pid: 17650, cores: 8)
+spawned uWSGI worker 3 (pid: 17657, cores: 8)
+spawned uWSGI worker 4 (pid: 17661, cores: 8)
+[pid: 17649|app: 0|req: 1/1] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:56:37 2016] GET / => generated 126356 bytes in 451 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 0)
+[pid: 17661|app: 0|req: 1/2] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:58:40 2016] GET / => generated 126356 bytes in 433 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 0)
+[pid: 17661|app: 0|req: 2/3] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 11:58:56 2016] GET / => generated 126361 bytes in 316 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 5)
+[pid: 17657|app: 0|req: 1/4] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 12:01:45 2016] GET / => generated 126356 bytes in 433 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 0)
+[pid: 17650|app: 0|req: 1/5] 111.206.12.22 () {40 vars in 852 bytes} [Thu Jan 21 12:06:03 2016] GET / => generated 126353 bytes in 432 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 0)
+Thu Jan 21 12:08:29 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 12:08:29 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+*** Starting uWSGI 2.0.12 (64bit) on [Thu Jan 21 12:08:54 2016] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-16) on 20 January 2016 10:37:53
+os: Linux-2.6.32-431.el6.x86_64 #1 SMP Sun Nov 10 22:19:54 EST 2013
+nodename: BJ-MXY-2-164.com
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/AXES
+writing pidfile to /home/AXES/uwsgi.pid
+detected binary path: /usr/local/python/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/AXES
+your processes number limit is 127307
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8888 fd 3
+Python version: 2.7.6 (default, Nov 24 2015, 15:20:07)  [GCC 4.4.7 20120313 (Red Hat 4.4.7-16)]
+Python main interpreter initialized at 0x1d50480
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 724480 bytes (707 KB) for 32 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x1d50480 pid: 18561 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 18561)
+spawned uWSGI worker 1 (pid: 18574, cores: 8)
+spawned uWSGI worker 2 (pid: 18575, cores: 8)
+spawned uWSGI worker 3 (pid: 18581, cores: 8)
+spawned uWSGI worker 4 (pid: 18587, cores: 8)
+[pid: 18574|app: 0|req: 1/1] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 12:08:55 2016] GET / => generated 23334 bytes in 293 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+[pid: 18581|app: 0|req: 1/2] 111.206.12.22 () {40 vars in 893 bytes} [Thu Jan 21 12:08:58 2016] GET /confmanage/url/ => generated 13699 bytes in 256 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+[pid: 18581|app: 0|req: 2/3] 111.206.12.22 () {40 vars in 878 bytes} [Thu Jan 21 12:09:00 2016] GET / => generated 23334 bytes in 56 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+[pid: 18581|app: 0|req: 3/4] 111.206.12.22 () {42 vars in 909 bytes} [Thu Jan 21 12:58:39 2016] GET / => generated 23334 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 3)
+[pid: 18581|app: 0|req: 4/5] 111.206.12.22 () {40 vars in 975 bytes} [Thu Jan 21 12:58:44 2016] GET /zabbixmanage/hostlist/gamename=%E4%B9%9D%E9%BC%8E%E4%BC%A0%E8%AF%B4/ => generated 25565 bytes in 79 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 6)
+Erro (2002, "Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)")
+[pid: 18581|app: 0|req: 5/6] 111.206.12.22 () {40 vars in 1025 bytes} [Thu Jan 21 12:58:47 2016] GET /zabbixmanage/edithost/hostname=219.232.224.122/ => generated 66413 bytes in 226 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 5)
+Erro (2002, "Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)")
+[pid: 18581|app: 0|req: 6/7] 111.206.12.22 () {42 vars in 1056 bytes} [Thu Jan 21 12:59:17 2016] GET /zabbixmanage/edithost/hostname=219.232.224.122/ => generated 66893 bytes in 215 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 2)
+Erro (2002, "Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)")
+[pid: 18581|app: 0|req: 7/8] 111.206.12.22 () {42 vars in 1056 bytes} [Thu Jan 21 12:59:53 2016] GET /zabbixmanage/edithost/hostname=219.232.224.122/ => generated 66893 bytes in 213 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 4)
+Thu Jan 21 13:00:35 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:00:35 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+*** Starting uWSGI 2.0.12 (64bit) on [Thu Jan 21 13:00:55 2016] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-16) on 20 January 2016 10:37:53
+os: Linux-2.6.32-431.el6.x86_64 #1 SMP Sun Nov 10 22:19:54 EST 2013
+nodename: BJ-MXY-2-164.com
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/AXES
+writing pidfile to /home/AXES/uwsgi.pid
+detected binary path: /usr/local/python/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/AXES
+your processes number limit is 127307
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8888 fd 3
+Python version: 2.7.6 (default, Nov 24 2015, 15:20:07)  [GCC 4.4.7 20120313 (Red Hat 4.4.7-16)]
+Python main interpreter initialized at 0x25c2480
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 724480 bytes (707 KB) for 32 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x25c2480 pid: 19138 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 19138)
+spawned uWSGI worker 1 (pid: 19151, cores: 8)
+spawned uWSGI worker 2 (pid: 19152, cores: 8)
+spawned uWSGI worker 3 (pid: 19158, cores: 8)
+spawned uWSGI worker 4 (pid: 19165, cores: 8)
+[pid: 19152|app: 0|req: 1/1] 111.206.12.22 () {42 vars in 1055 bytes} [Thu Jan 21 13:00:59 2016] GET /zabbixmanage/edithost/hostname=219.232.224.122/ => generated 417500 bytes in 2263 msecs (HTTP/1.1 500) 3 headers in 106 bytes (2 switches on core 0)
+Thu Jan 21 13:01:31 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:01:31 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+*** Starting uWSGI 2.0.12 (64bit) on [Thu Jan 21 13:01:42 2016] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-16) on 20 January 2016 10:37:53
+os: Linux-2.6.32-431.el6.x86_64 #1 SMP Sun Nov 10 22:19:54 EST 2013
+nodename: BJ-MXY-2-164.com
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/AXES
+writing pidfile to /home/AXES/uwsgi.pid
+detected binary path: /usr/local/python/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/AXES
+your processes number limit is 127307
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8888 fd 3
+Python version: 2.7.6 (default, Nov 24 2015, 15:20:07)  [GCC 4.4.7 20120313 (Red Hat 4.4.7-16)]
+Python main interpreter initialized at 0x2307480
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 724480 bytes (707 KB) for 32 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x2307480 pid: 19262 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 19262)
+spawned uWSGI worker 1 (pid: 19275, cores: 8)
+spawned uWSGI worker 2 (pid: 19276, cores: 8)
+spawned uWSGI worker 3 (pid: 19280, cores: 8)
+spawned uWSGI worker 4 (pid: 19286, cores: 8)
+[pid: 19276|app: 0|req: 1/1] 111.206.12.22 () {42 vars in 1055 bytes} [Thu Jan 21 13:01:43 2016] GET /zabbixmanage/edithost/hostname=219.232.224.122/ => generated 63663 bytes in 738 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 0)
+[pid: 19276|app: 0|req: 2/2] 111.206.12.22 () {40 vars in 939 bytes} [Thu Jan 21 13:01:47 2016] GET /confmanage/idc/ => generated 22136 bytes in 40 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 1)
+[pid: 19275|app: 0|req: 1/3] 111.206.12.22 () {40 vars in 939 bytes} [Thu Jan 21 13:01:49 2016] GET /zabbixmanage/createmaintenance/ => generated 23199 bytes in 256 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 0)
+[pid: 19275|app: 0|req: 2/4] 111.206.12.22 () {40 vars in 909 bytes} [Thu Jan 21 13:01:54 2016] GET /log/log/ => generated 11317 bytes in 39 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+GET
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+[pid: 19280|app: 0|req: 1/5] 111.206.12.22 () {40 vars in 914 bytes} [Thu Jan 21 13:01:58 2016] GET /zabbixmanage/calendar/ => generated 35241 bytes in 562 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 3)
+[{'status': 0, 'hosts': [], 'name': u'TY_ZhengShi', 'groups': [u'\u6843\u56ed_GS']}, {'status': 0, 'hosts': [], 'name': u'DPCQ_ZS', 'groups': [u'\u6597\u7834\u82cd\u7a79_GS']}]
+[pid: 19280|app: 0|req: 2/6] 111.206.12.22 () {40 vars in 942 bytes} [Thu Jan 21 13:02:10 2016] GET /zabbixmanage/maintenancelist/ => generated 12423 bytes in 44 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+[pid: 19280|app: 0|req: 3/7] 111.206.12.22 () {40 vars in 907 bytes} [Thu Jan 21 13:02:13 2016] GET /log/log/ => generated 11317 bytes in 32 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 6)
+[pid: 19275|app: 0|req: 3/8] 111.206.12.22 () {40 vars in 916 bytes} [Thu Jan 21 13:02:18 2016] GET /zabbixmanage/grouplist/ => generated 64890 bytes in 102 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 5)
+[pid: 19275|app: 0|req: 4/9] 111.206.12.22 () {40 vars in 1011 bytes} [Thu Jan 21 13:02:28 2016] GET /zabbixmanage/hostlist/groupname=%E7%A7%BB%E5%8A%A8%E6%A8%A1%E7%89%88%E7%BB%84/ => generated 13553 bytes in 46 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 4)
+[pid: 19275|app: 0|req: 5/10] 111.206.12.22 () {40 vars in 975 bytes} [Thu Jan 21 13:02:31 2016] GET /zabbixmanage/geturl/url=101.201.150.146:8080/ => generated 0 bytes in 3 msecs (HTTP/1.1 302) 4 headers in 200 bytes (1 switches on core 3)
+[pid: 19275|app: 0|req: 6/11] 111.206.12.22 () {40 vars in 885 bytes} [Thu Jan 21 13:02:31 2016] GET / => generated 23334 bytes in 63 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 7)
+[pid: 19276|app: 0|req: 3/12] 111.206.12.22 () {42 vars in 917 bytes} [Thu Jan 21 13:05:30 2016] GET / => generated 23337 bytes in 63 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 7)
+[pid: 19276|app: 0|req: 4/13] 111.206.12.22 () {42 vars in 917 bytes} [Thu Jan 21 13:09:18 2016] GET / => generated 23380 bytes in 50 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 6)
+[pid: 19276|app: 0|req: 5/14] 111.206.12.22 () {42 vars in 917 bytes} [Thu Jan 21 13:09:20 2016] GET / => generated 23380 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 5)
+[pid: 19275|app: 0|req: 7/15] 111.206.12.22 () {40 vars in 937 bytes} [Thu Jan 21 13:09:44 2016] GET /zabbixmanage/geturl/url=123.59.6.164/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 4 headers in 192 bytes (1 switches on core 2)
+[pid: 19280|app: 0|req: 4/16] 111.206.12.22 () {40 vars in 855 bytes} [Thu Jan 21 13:09:44 2016] GET / => generated 18984 bytes in 54 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 5)
+[pid: 19275|app: 0|req: 8/17] 111.206.12.22 () {40 vars in 945 bytes} [Thu Jan 21 13:09:47 2016] GET /zabbixmanage/geturl/url=101.201.150.146:8080/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 4 headers in 200 bytes (1 switches on core 6)
+[pid: 19275|app: 0|req: 9/18] 111.206.12.22 () {40 vars in 863 bytes} [Thu Jan 21 13:09:47 2016] GET / => generated 23380 bytes in 47 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+[pid: 19280|app: 0|req: 5/19] 111.206.12.22 () {40 vars in 895 bytes} [Thu Jan 21 13:09:49 2016] GET /confmanage/game/ => generated 20799 bytes in 46 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 4)
+[pid: 19275|app: 0|req: 10/20] 111.206.12.22 () {40 vars in 895 bytes} [Thu Jan 21 13:09:51 2016] GET /log/log/ => generated 11363 bytes in 29 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 5)
+GET
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+[pid: 19286|app: 0|req: 1/21] 111.206.12.22 () {40 vars in 915 bytes} [Thu Jan 21 13:09:53 2016] GET /zabbixmanage/calendar/ => generated 35287 bytes in 557 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 0)
+[pid: 19275|app: 0|req: 11/22] 111.206.12.22 () {40 vars in 931 bytes} [Thu Jan 21 13:09:56 2016] GET /zabbixmanage/grouplist/ => generated 64936 bytes in 99 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 4)
+[pid: 19276|app: 0|req: 6/23] 111.206.12.22 () {42 vars in 962 bytes} [Thu Jan 21 13:13:07 2016] GET /zabbixmanage/grouplist/ => generated 64893 bytes in 102 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 2)
+[{'status': 0, 'hosts': [], 'name': u'TY_ZhengShi', 'groups': [u'\u6843\u56ed_GS']}, {'status': 0, 'hosts': [], 'name': u'DPCQ_ZS', 'groups': [u'\u6597\u7834\u82cd\u7a79_GS']}]
+[pid: 19280|app: 0|req: 6/24] 111.206.12.22 () {40 vars in 944 bytes} [Thu Jan 21 13:13:10 2016] GET /zabbixmanage/maintenancelist/ => generated 12426 bytes in 52 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 7)
+[{'status': 0, 'hosts': [], 'name': u'TY_ZhengShi', 'groups': [u'\u6843\u56ed_GS']}, {'status': 0, 'hosts': [], 'name': u'DPCQ_ZS', 'groups': [u'\u6597\u7834\u82cd\u7a79_GS']}]
+[pid: 19286|app: 0|req: 2/25] 111.206.12.22 () {42 vars in 975 bytes} [Thu Jan 21 13:15:58 2016] GET /zabbixmanage/maintenancelist/ => generated 12426 bytes in 46 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 3)
+GET
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+['4']
+2
+['4']
+2
+['4']
+3
+['4']
+3
+['4']
+4
+['4']
+4
+['4']
+5
+['4']
+5
+['4']
+6
+['4']
+6
+['4']
+7
+['4']
+7
+['4']
+1
+['4']
+1
+[pid: 19280|app: 0|req: 7/26] 111.206.12.22 () {40 vars in 936 bytes} [Thu Jan 21 13:16:43 2016] GET /zabbixmanage/calendar/ => generated 35244 bytes in 320 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 2)
+[pid: 19276|app: 0|req: 7/27] 111.206.12.22 () {40 vars in 901 bytes} [Thu Jan 21 13:16:46 2016] GET /log/log/ => generated 11320 bytes in 30 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+[pid: 19280|app: 0|req: 8/28] 111.206.12.22 () {40 vars in 945 bytes} [Thu Jan 21 13:16:58 2016] GET /zabbixmanage/geturl/url=123.59.6.164/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 4 headers in 192 bytes (1 switches on core 3)
+[pid: 19280|app: 0|req: 9/29] 111.206.12.22 () {40 vars in 863 bytes} [Thu Jan 21 13:16:58 2016] GET / => generated 18949 bytes in 49 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+[pid: 19275|app: 0|req: 12/30] 111.206.12.22 () {42 vars in 894 bytes} [Thu Jan 21 13:17:37 2016] GET / => generated 18949 bytes in 53 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 3)
+[pid: 19275|app: 0|req: 13/31] 111.206.12.22 () {42 vars in 894 bytes} [Thu Jan 21 13:17:43 2016] GET / => generated 18949 bytes in 44 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 7)
+[pid: 19280|app: 0|req: 10/32] 111.206.12.22 () {40 vars in 929 bytes} [Thu Jan 21 13:17:45 2016] GET /zabbixmanage/geturl/url=123.59.6.164/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 4 headers in 192 bytes (1 switches on core 6)
+[pid: 19275|app: 0|req: 14/33] 111.206.12.22 () {40 vars in 855 bytes} [Thu Jan 21 13:17:45 2016] GET / => generated 18949 bytes in 45 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 2)
+[pid: 19280|app: 0|req: 11/34] 111.206.12.22 () {40 vars in 855 bytes} [Thu Jan 21 13:17:48 2016] GET / => generated 18949 bytes in 44 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 4)
+[pid: 19276|app: 0|req: 8/35] 111.206.12.22 () {42 vars in 886 bytes} [Thu Jan 21 13:19:12 2016] GET / => generated 18949 bytes in 49 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 7)
+[pid: 19276|app: 0|req: 9/36] 111.206.12.22 () {40 vars in 967 bytes} [Thu Jan 21 13:19:14 2016] GET /zabbixmanage/hostlist/gamename=%E5%B9%BB%E6%83%B3%E7%A5%9E%E5%9F%9F/ => generated 48336 bytes in 93 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 4)
+[pid: 19286|app: 0|req: 3/37] 111.206.12.22 () {42 vars in 998 bytes} [Thu Jan 21 13:19:20 2016] GET /zabbixmanage/hostlist/gamename=%E5%B9%BB%E6%83%B3%E7%A5%9E%E5%9F%9F/ => generated 48371 bytes in 95 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 4)
+[pid: 19286|app: 0|req: 4/38] 111.206.12.22 () {42 vars in 998 bytes} [Thu Jan 21 13:19:21 2016] GET /zabbixmanage/hostlist/gamename=%E5%B9%BB%E6%83%B3%E7%A5%9E%E5%9F%9F/ => generated 48371 bytes in 102 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 0)
+[pid: 19276|app: 0|req: 10/39] 111.206.12.22 () {42 vars in 929 bytes} [Thu Jan 21 13:19:58 2016] GET /static/js/jquery-1.10.2.min.map => generated 2702 bytes in 11 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 3)
+[pid: 19286|app: 0|req: 5/40] 111.206.12.22 () {42 vars in 998 bytes} [Thu Jan 21 13:20:06 2016] GET /zabbixmanage/hostlist/gamename=%E5%B9%BB%E6%83%B3%E7%A5%9E%E5%9F%9F/ => generated 48371 bytes in 86 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 2)
+[pid: 19275|app: 0|req: 15/41] 111.206.12.22 () {42 vars in 929 bytes} [Thu Jan 21 13:20:06 2016] GET /static/js/jquery-1.10.2.min.map => generated 2702 bytes in 11 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 19276|app: 0|req: 11/42] 111.206.12.22 () {38 vars in 814 bytes} [Thu Jan 21 13:20:55 2016] GET / => generated 18984 bytes in 44 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+[pid: 19276|app: 0|req: 12/43] 111.206.12.22 () {42 vars in 929 bytes} [Thu Jan 21 13:20:56 2016] GET /static/js/jquery-1.10.2.min.map => generated 2702 bytes in 10 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 5)
+Thu Jan 21 13:22:43 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:22:43 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+*** Starting uWSGI 2.0.12 (64bit) on [Thu Jan 21 13:23:01 2016] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-16) on 20 January 2016 10:37:53
+os: Linux-2.6.32-431.el6.x86_64 #1 SMP Sun Nov 10 22:19:54 EST 2013
+nodename: BJ-MXY-2-164.com
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/AXES
+writing pidfile to /home/AXES/uwsgi.pid
+detected binary path: /usr/local/python/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/AXES
+your processes number limit is 127307
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8888 fd 3
+Python version: 2.7.6 (default, Nov 24 2015, 15:20:07)  [GCC 4.4.7 20120313 (Red Hat 4.4.7-16)]
+Python main interpreter initialized at 0x1ff9480
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 724480 bytes (707 KB) for 32 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x1ff9480 pid: 20430 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 20430)
+spawned uWSGI worker 1 (pid: 20443, cores: 8)
+spawned uWSGI worker 2 (pid: 20444, cores: 8)
+spawned uWSGI worker 3 (pid: 20450, cores: 8)
+spawned uWSGI worker 4 (pid: 20456, cores: 8)
+[pid: 20444|app: 0|req: 1/1] 111.206.12.22 () {40 vars in 845 bytes} [Thu Jan 21 13:23:04 2016] GET / => generated 18949 bytes in 299 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+[pid: 20444|app: 0|req: 2/2] 111.206.12.22 () {42 vars in 929 bytes} [Thu Jan 21 13:23:04 2016] GET /static/js/jquery-1.10.2.min.map => generated 2702 bytes in 11 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 2)
+[pid: 20450|app: 0|req: 1/3] 111.206.12.22 () {40 vars in 929 bytes} [Thu Jan 21 13:23:07 2016] GET /zabbixmanage/geturl/url=123.59.6.164/ => generated 0 bytes in 198 msecs (HTTP/1.1 302) 5 headers in 230 bytes (1 switches on core 0)
+[pid: 20450|app: 0|req: 2/4] 111.206.12.22 () {40 vars in 872 bytes} [Thu Jan 21 13:23:07 2016] GET / => generated 18961 bytes in 87 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 7)
+[pid: 20444|app: 0|req: 3/5] 111.206.12.22 () {42 vars in 946 bytes} [Thu Jan 21 13:23:07 2016] GET /static/js/jquery-1.10.2.min.map => generated 2702 bytes in 10 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 7)
+[pid: 20443|app: 0|req: 1/6] 111.206.12.22 () {42 vars in 903 bytes} [Thu Jan 21 13:23:32 2016] GET / => generated 18984 bytes in 292 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+[pid: 20456|app: 0|req: 1/7] 111.206.12.22 () {42 vars in 946 bytes} [Thu Jan 21 13:23:32 2016] GET /static/js/jquery-1.10.2.min.map => generated 2702 bytes in 109 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 20456|app: 0|req: 2/8] 111.206.12.22 () {42 vars in 903 bytes} [Thu Jan 21 13:23:36 2016] GET / => generated 18961 bytes in 183 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 6)
+[pid: 20456|app: 0|req: 3/9] 111.206.12.22 () {42 vars in 946 bytes} [Thu Jan 21 13:23:37 2016] GET /static/js/jquery-1.10.2.min.map => generated 2702 bytes in 10 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 3)
+[pid: 20450|app: 0|req: 3/10] 111.206.12.22 () {40 vars in 962 bytes} [Thu Jan 21 13:23:39 2016] GET /zabbixmanage/geturl/url=101.201.150.146:8080/ => generated 0 bytes in 3 msecs (HTTP/1.1 302) 5 headers in 248 bytes (1 switches on core 4)
+[pid: 20450|app: 0|req: 4/11] 111.206.12.22 () {40 vars in 890 bytes} [Thu Jan 21 13:23:39 2016] GET / => generated 23357 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 5)
+[pid: 20456|app: 0|req: 4/12] 111.206.12.22 () {42 vars in 964 bytes} [Thu Jan 21 13:23:39 2016] GET /static/js/jquery-1.10.2.min.map => generated 2702 bytes in 10 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 2)
+[pid: 20443|app: 0|req: 2/13] 111.206.12.22 () {38 vars in 733 bytes} [Thu Jan 21 13:24:03 2016] GET / => generated 18949 bytes in 45 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 5)
+[pid: 20456|app: 0|req: 5/14] 111.206.12.22 () {40 vars in 864 bytes} [Thu Jan 21 13:24:06 2016] GET /zabbixmanage/geturl/url=101.201.150.146:8080/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 5 headers in 248 bytes (1 switches on core 7)
+[pid: 20456|app: 0|req: 6/15] 111.206.12.22 () {40 vars in 852 bytes} [Thu Jan 21 13:24:06 2016] GET / => generated 23357 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+[pid: 20456|app: 0|req: 7/16] 111.206.12.22 () {40 vars in 926 bytes} [Thu Jan 21 13:24:08 2016] GET /zabbixmanage/geturl/url=123.59.6.164/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 5 headers in 230 bytes (1 switches on core 5)
+[pid: 20456|app: 0|req: 8/17] 111.206.12.22 () {40 vars in 834 bytes} [Thu Jan 21 13:24:08 2016] GET / => generated 18961 bytes in 43 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+[pid: 20444|app: 0|req: 4/18] 111.206.12.22 () {40 vars in 924 bytes} [Thu Jan 21 13:26:22 2016] GET /zabbixmanage/geturl/url=101.201.150.146:8080/ => generated 0 bytes in 3 msecs (HTTP/1.1 302) 5 headers in 248 bytes (1 switches on core 3)
+[pid: 20443|app: 0|req: 3/19] 111.206.12.22 () {40 vars in 852 bytes} [Thu Jan 21 13:26:22 2016] GET / => generated 23357 bytes in 49 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 4)
+[pid: 20450|app: 0|req: 5/20] 111.206.12.22 () {42 vars in 883 bytes} [Thu Jan 21 13:26:25 2016] GET / => generated 23357 bytes in 50 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 3)
+[pid: 20450|app: 0|req: 6/21] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:26:40 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12168 bytes in 35 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 1)
+[pid: 20450|app: 0|req: 7/22] 111.206.12.22 () {40 vars in 887 bytes} [Thu Jan 21 13:26:42 2016] GET / => generated 23357 bytes in 49 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 6)
+[pid: 20450|app: 0|req: 8/23] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:26:43 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12168 bytes in 45 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 0)
+[pid: 20450|app: 0|req: 9/24] 111.206.12.22 () {40 vars in 887 bytes} [Thu Jan 21 13:26:44 2016] GET / => generated 23357 bytes in 47 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 7)
+[pid: 20450|app: 0|req: 10/25] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:26:45 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12168 bytes in 34 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 4)
+[pid: 20450|app: 0|req: 11/26] 111.206.12.22 () {40 vars in 887 bytes} [Thu Jan 21 13:26:47 2016] GET / => generated 23357 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 5)
+[pid: 20450|app: 0|req: 12/27] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:26:48 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12168 bytes in 34 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 2)
+[pid: 20450|app: 0|req: 13/28] 111.206.12.22 () {40 vars in 887 bytes} [Thu Jan 21 13:26:49 2016] GET / => generated 23357 bytes in 49 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 3)
+[pid: 20450|app: 0|req: 14/29] 111.206.12.22 () {42 vars in 918 bytes} [Thu Jan 21 13:27:23 2016] GET / => generated 23357 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+[pid: 20444|app: 0|req: 5/30] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:27:24 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12094 bytes in 34 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 6)
+[pid: 20444|app: 0|req: 6/31] 111.206.12.22 () {40 vars in 887 bytes} [Thu Jan 21 13:27:25 2016] GET / => generated 23357 bytes in 51 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+[pid: 20444|app: 0|req: 7/32] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:27:26 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12094 bytes in 33 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 5)
+[pid: 20444|app: 0|req: 8/33] 111.206.12.22 () {40 vars in 887 bytes} [Thu Jan 21 13:27:27 2016] GET / => generated 23357 bytes in 54 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+[pid: 20444|app: 0|req: 9/34] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:27:27 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12094 bytes in 34 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 2)
+[pid: 20444|app: 0|req: 10/35] 111.206.12.22 () {40 vars in 887 bytes} [Thu Jan 21 13:27:29 2016] GET / => generated 23357 bytes in 49 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 7)
+[pid: 20444|app: 0|req: 11/36] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:27:29 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12094 bytes in 34 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 3)
+[pid: 20450|app: 0|req: 15/37] 111.206.12.22 () {40 vars in 887 bytes} [Thu Jan 21 13:27:30 2016] GET / => generated 23357 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 6)
+[pid: 20450|app: 0|req: 16/38] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:27:31 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12094 bytes in 33 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 0)
+./zabbixapp/views/views.py:197: RemovedInDjango19Warning: `request.REQUEST` is deprecated, use `request.GET` or `request.POST` instead.
+  game_list = request.REQUEST.getlist('game_list')
+
+/usr/local/python/lib/python2.7/site-packages/django/core/handlers/wsgi.py:126: RemovedInDjango19Warning: `MergeDict` is deprecated, use `dict.update()` instead.
+  self._request = datastructures.MergeDict(self.POST, self.GET)
+
+[pid: 20450|app: 0|req: 17/39] 111.206.12.22 () {40 vars in 1080 bytes} [Thu Jan 21 13:27:32 2016] GET /zabbixmanage/createhosts/?csrfmiddlewaretoken=WGwsyUXhS3cQLvIh1N8pjUUDfCDfT6TB&table_id_length=10 => generated 38651 bytes in 57 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 7)
+[pid: 20450|app: 0|req: 18/40] 111.206.12.22 () {42 vars in 1111 bytes} [Thu Jan 21 13:28:16 2016] GET /zabbixmanage/createhosts/?csrfmiddlewaretoken=WGwsyUXhS3cQLvIh1N8pjUUDfCDfT6TB&table_id_length=10 => generated 38605 bytes in 57 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 4)
+[pid: 20456|app: 0|req: 9/41] 111.206.12.22 () {40 vars in 1001 bytes} [Thu Jan 21 13:28:25 2016] GET /zabbixmanage/templatelist/ => generated 43243 bytes in 110 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 6)
+[pid: 20456|app: 0|req: 10/42] 111.206.12.22 () {40 vars in 967 bytes} [Thu Jan 21 13:28:27 2016] GET /zabbixmanage/templatelist/?table_id_length=10 => generated 43243 bytes in 111 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 7)
+[pid: 20444|app: 0|req: 12/43] 111.206.12.22 () {40 vars in 943 bytes} [Thu Jan 21 13:28:29 2016] GET /zabbixmanage/grouplist/ => generated 64913 bytes in 103 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 4)
+[pid: 20450|app: 0|req: 19/44] 111.206.12.22 () {40 vars in 925 bytes} [Thu Jan 21 13:28:31 2016] GET /zabbixmanage/creategroup/ => generated 11523 bytes in 24 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 5)
+[pid: 20444|app: 0|req: 13/45] 111.206.12.22 () {40 vars in 878 bytes} [Thu Jan 21 13:28:39 2016] GET / => generated 23357 bytes in 66 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 5)
+[pid: 20443|app: 0|req: 4/46] 111.206.12.22 () {40 vars in 964 bytes} [Thu Jan 21 13:28:41 2016] GET /zabbixmanage/hostlist/gamename=%E6%B5%B7%E6%88%98%E4%B8%96%E7%95%8C/ => generated 162776 bytes in 240 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 2)
+./zabbixapp/views/views.py:158: RemovedInDjango19Warning: `request.REQUEST` is deprecated, use `request.GET` or `request.POST` instead.
+  host_id = request.REQUEST.getlist('host_list')
+
+/usr/local/python/lib/python2.7/site-packages/django/core/handlers/wsgi.py:126: RemovedInDjango19Warning: `MergeDict` is deprecated, use `dict.update()` instead.
+  self._request = datastructures.MergeDict(self.POST, self.GET)
+
+[pid: 20443|app: 0|req: 5/47] 111.206.12.22 () {44 vars in 1151 bytes} [Thu Jan 21 13:28:44 2016] POST /zabbixmanage/edithosts/gamename=%E6%B5%B7%E6%88%98%E4%B8%96%E7%95%8C/ => generated 40963 bytes in 73 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 4)
+[pid: 20444|app: 0|req: 14/48] 111.206.12.22 () {40 vars in 968 bytes} [Thu Jan 21 13:28:51 2016] GET /zabbixmanage/createhost/ => generated 72815 bytes in 229 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 2)
+./zabbixapp/views/views.py:158: RemovedInDjango19Warning: `request.REQUEST` is deprecated, use `request.GET` or `request.POST` instead.
+  host_id = request.REQUEST.getlist('host_list')
+
+/usr/local/python/lib/python2.7/site-packages/django/core/handlers/wsgi.py:126: RemovedInDjango19Warning: `MergeDict` is deprecated, use `dict.update()` instead.
+  self._request = datastructures.MergeDict(self.POST, self.GET)
+
+[pid: 20444|app: 0|req: 15/49] 111.206.12.22 () {44 vars in 1151 bytes} [Thu Jan 21 13:28:59 2016] POST /zabbixmanage/edithosts/gamename=%E6%B5%B7%E6%88%98%E4%B8%96%E7%95%8C/ => generated 40963 bytes in 61 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 7)
+[pid: 20444|app: 0|req: 16/50] 111.206.12.22 () {42 vars in 909 bytes} [Thu Jan 21 13:29:08 2016] GET / => generated 23357 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 3)
+[pid: 20444|app: 0|req: 17/51] 111.206.12.22 () {40 vars in 922 bytes} [Thu Jan 21 13:29:09 2016] GET /zabbixmanage/projectlist/nomonitor/ => generated 12094 bytes in 34 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 6)
+[pid: 20450|app: 0|req: 20/52] 111.206.12.22 () {40 vars in 887 bytes} [Thu Jan 21 13:29:10 2016] GET / => generated 23357 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 3)
+[pid: 20444|app: 0|req: 18/53] 111.206.12.22 () {38 vars in 732 bytes} [Thu Jan 21 13:29:28 2016] GET / => generated 18949 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+[pid: 20443|app: 0|req: 6/54] 111.206.12.22 () {38 vars in 733 bytes} [Thu Jan 21 13:30:37 2016] GET / => generated 18949 bytes in 52 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 7)
+[pid: 20443|app: 0|req: 7/55] 111.206.12.22 () {40 vars in 764 bytes} [Thu Jan 21 13:30:48 2016] GET / => generated 18949 bytes in 45 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+Thu Jan 21 13:31:32 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:31:32 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+*** Starting uWSGI 2.0.12 (64bit) on [Thu Jan 21 13:31:46 2016] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-16) on 20 January 2016 10:37:53
+os: Linux-2.6.32-431.el6.x86_64 #1 SMP Sun Nov 10 22:19:54 EST 2013
+nodename: BJ-MXY-2-164.com
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/AXES
+writing pidfile to /home/AXES/uwsgi.pid
+detected binary path: /usr/local/python/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/AXES
+your processes number limit is 127307
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8888 fd 3
+Python version: 2.7.6 (default, Nov 24 2015, 15:20:07)  [GCC 4.4.7 20120313 (Red Hat 4.4.7-16)]
+Python main interpreter initialized at 0x107e480
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 724480 bytes (707 KB) for 32 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x107e480 pid: 21004 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 21004)
+spawned uWSGI worker 1 (pid: 21017, cores: 8)
+spawned uWSGI worker 2 (pid: 21018, cores: 8)
+spawned uWSGI worker 3 (pid: 21024, cores: 8)
+spawned uWSGI worker 4 (pid: 21031, cores: 8)
+[pid: 21024|app: 0|req: 1/1] 111.206.12.22 () {38 vars in 733 bytes} [Thu Jan 21 13:31:55 2016] GET / => generated 86171 bytes in 244 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 0)
+[pid: 21024|app: 0|req: 2/2] 111.206.12.22 () {40 vars in 764 bytes} [Thu Jan 21 13:32:11 2016] GET / => generated 86359 bytes in 200 msecs (HTTP/1.1 500) 2 headers in 92 bytes (1 switches on core 3)
+[pid: 21018|app: 0|req: 1/3] 111.206.12.22 () {40 vars in 764 bytes} [Thu Jan 21 13:32:38 2016] GET / => generated 18949 bytes in 300 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+[pid: 21024|app: 0|req: 3/4] 111.206.12.22 () {40 vars in 764 bytes} [Thu Jan 21 13:32:39 2016] GET / => generated 18949 bytes in 244 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 6)
+101.201.150.146:8080
+[pid: 21031|app: 0|req: 1/5] 111.206.12.22 () {40 vars in 864 bytes} [Thu Jan 21 13:32:41 2016] GET /zabbixmanage/geturl/url=101.201.150.146:8080/ => generated 0 bytes in 197 msecs (HTTP/1.1 302) 5 headers in 248 bytes (1 switches on core 3)
+[pid: 21031|app: 0|req: 2/6] 111.206.12.22 () {40 vars in 852 bytes} [Thu Jan 21 13:32:41 2016] GET / => generated 23357 bytes in 86 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+123.59.6.164
+[pid: 21031|app: 0|req: 3/7] 111.206.12.22 () {40 vars in 926 bytes} [Thu Jan 21 13:32:43 2016] GET /zabbixmanage/geturl/url=123.59.6.164/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 5 headers in 230 bytes (1 switches on core 2)
+[pid: 21031|app: 0|req: 4/8] 111.206.12.22 () {40 vars in 834 bytes} [Thu Jan 21 13:32:43 2016] GET / => generated 18961 bytes in 59 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 6)
+Thu Jan 21 13:33:59 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Thu Jan 21 13:33:59 2016 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+*** Starting uWSGI 2.0.12 (64bit) on [Thu Jan 21 13:34:07 2016] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-16) on 20 January 2016 10:37:53
+os: Linux-2.6.32-431.el6.x86_64 #1 SMP Sun Nov 10 22:19:54 EST 2013
+nodename: BJ-MXY-2-164.com
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/AXES
+writing pidfile to /home/AXES/uwsgi.pid
+detected binary path: /usr/local/python/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/AXES
+your processes number limit is 127307
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8888 fd 3
+Python version: 2.7.6 (default, Nov 24 2015, 15:20:07)  [GCC 4.4.7 20120313 (Red Hat 4.4.7-16)]
+Python main interpreter initialized at 0x28a2480
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 724480 bytes (707 KB) for 32 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x28a2480 pid: 21145 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 21145)
+spawned uWSGI worker 1 (pid: 21158, cores: 8)
+spawned uWSGI worker 2 (pid: 21159, cores: 8)
+spawned uWSGI worker 3 (pid: 21165, cores: 8)
+spawned uWSGI worker 4 (pid: 21170, cores: 8)
+[pid: 21170|app: 0|req: 1/1] 111.206.12.22 () {42 vars in 865 bytes} [Thu Jan 21 13:34:08 2016] GET / => generated 18961 bytes in 300 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+[pid: 21170|app: 0|req: 2/2] 111.206.12.22 () {38 vars in 733 bytes} [Thu Jan 21 13:34:27 2016] GET / => generated 18949 bytes in 45 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+[pid: 21170|app: 0|req: 3/3] 111.206.12.22 () {40 vars in 764 bytes} [Thu Jan 21 13:34:31 2016] GET / => generated 18949 bytes in 44 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 5)
+[pid: 21170|app: 0|req: 4/4] 111.206.12.22 () {40 vars in 764 bytes} [Thu Jan 21 13:34:32 2016] GET / => generated 18949 bytes in 54 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 7)
+[pid: 21170|app: 0|req: 5/5] 111.206.12.22 () {40 vars in 764 bytes} [Thu Jan 21 13:34:58 2016] GET / => generated 18949 bytes in 45 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 3)
+[pid: 21170|app: 0|req: 6/6] 111.206.12.22 () {40 vars in 764 bytes} [Thu Jan 21 13:35:00 2016] GET / => generated 18949 bytes in 45 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 6)
+[pid: 21158|app: 0|req: 1/7] 111.206.12.22 () {40 vars in 764 bytes} [Thu Jan 21 13:35:01 2016] GET / => generated 18949 bytes in 300 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+101.201.150.146:8080
+None
+None
+[pid: 21158|app: 0|req: 2/8] 111.206.12.22 () {40 vars in 864 bytes} [Thu Jan 21 13:35:04 2016] GET /zabbixmanage/geturl/url=101.201.150.146:8080/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 5 headers in 248 bytes (1 switches on core 5)
+[pid: 21159|app: 0|req: 1/9] 111.206.12.22 () {40 vars in 852 bytes} [Thu Jan 21 13:35:04 2016] GET / => generated 23357 bytes in 282 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+123.59.6.164
+101.201.150.146:8080
+http://101.201.150.146:8080/api_jsonrpc.php
+[pid: 21158|app: 0|req: 3/10] 111.206.12.22 () {40 vars in 926 bytes} [Thu Jan 21 13:35:08 2016] GET /zabbixmanage/geturl/url=123.59.6.164/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 5 headers in 230 bytes (1 switches on core 2)
+[pid: 21158|app: 0|req: 4/11] 111.206.12.22 () {40 vars in 834 bytes} [Thu Jan 21 13:35:08 2016] GET / => generated 18961 bytes in 44 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 6)
+[pid: 21165|app: 0|req: 1/12] 111.206.12.22 () {38 vars in 733 bytes} [Thu Jan 21 13:38:56 2016] GET / => generated 18972 bytes in 302 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 0)
+101.201.150.146:8080
+[pid: 21165|app: 0|req: 2/13] 111.206.12.22 () {40 vars in 864 bytes} [Thu Jan 21 13:38:59 2016] GET /zabbixmanage/geturl/url=101.201.150.146:8080/ => generated 0 bytes in 3 msecs (HTTP/1.1 302) 5 headers in 248 bytes (1 switches on core 2)
+[pid: 21165|app: 0|req: 3/14] 111.206.12.22 () {40 vars in 852 bytes} [Thu Jan 21 13:38:59 2016] GET / => generated 23368 bytes in 50 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 4)
+123.59.6.164
+[pid: 21165|app: 0|req: 4/15] 111.206.12.22 () {40 vars in 926 bytes} [Thu Jan 21 13:39:01 2016] GET /zabbixmanage/geturl/url=123.59.6.164/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 5 headers in 230 bytes (1 switches on core 7)
+[pid: 21165|app: 0|req: 5/16] 111.206.12.22 () {40 vars in 834 bytes} [Thu Jan 21 13:39:01 2016] GET / => generated 18972 bytes in 45 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 6)
+[pid: 21165|app: 0|req: 6/17] 111.206.12.22 () {42 vars in 856 bytes} [Thu Jan 21 13:51:22 2016] GET / => generated 23360 bytes in 49 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 1)
+123.59.6.164
+None
+http://101.201.150.146:8080/api_jsonrpc.php
+[pid: 21158|app: 0|req: 5/18] 111.206.12.22 () {40 vars in 884 bytes} [Thu Jan 21 13:51:31 2016] GET /zabbixmanage/geturl/url=123.59.6.164/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 5 headers in 230 bytes (1 switches on core 7)
+[pid: 21158|app: 0|req: 6/19] 111.206.12.22 () {40 vars in 819 bytes} [Thu Jan 21 13:51:31 2016] GET / => generated 18972 bytes in 45 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 4)
+123.59.6.164
+[pid: 21170|app: 0|req: 7/20] 111.206.12.22 () {40 vars in 909 bytes} [Thu Jan 21 13:51:33 2016] GET /zabbixmanage/geturl/url=101.201.150.146:8080/ => generated 0 bytes in 2 msecs (HTTP/1.1 302) 5 headers in 248 bytes (1 switches on core 4)
+[pid: 21159|app: 0|req: 2/21] 111.206.12.22 () {40 vars in 837 bytes} [Thu Jan 21 13:51:33 2016] GET / => generated 23368 bytes in 48 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 2)
+[pid: 21165|app: 0|req: 7/22] 111.206.12.22 () {40 vars in 869 bytes} [Thu Jan 21 13:51:44 2016] GET /confmanage/game/ => generated 20787 bytes in 40 msecs (HTTP/1.1 200) 4 headers in 224 bytes (1 switches on core 3)
+[pid: 21159|app: 0|req: 3/23] 111.206.12.22 () {40 vars in 853 bytes} [Thu Jan 21 13:51:46 2016] GET / => generated 23368 bytes in 49 msecs (HTTP/1.1 200) 5 headers in 355 bytes (1 switches on core 3)

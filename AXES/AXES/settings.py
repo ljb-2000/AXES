@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'systemmanage',
     'zabbixapp',
+    'commonapp',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -75,8 +76,8 @@ DATABASES = {
         'NAME': 'AXESDatabases',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '',
-        'PORT': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 

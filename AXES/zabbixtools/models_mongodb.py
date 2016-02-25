@@ -46,6 +46,12 @@ def getHost(url, host_id=None, host_name=None, group_id=None, group_name=None):
         return db.find()
 
 
+def regexGetHost(url, group_name):
+    collection = processUrl(url)
+    db = connDB(collection, 'host')
+    return db.find({'groups.name': {'$regex': group_name}})
+
+
 def getGroup(url, group_id=None, group_name=None):
     collection = processUrl(url)
     db = connDB(collection, 'host_group')
@@ -57,11 +63,13 @@ def getGroup(url, group_id=None, group_name=None):
         return db.find()
 
 
-def getTemplate(url, template_name=None):
+def getTemplate(url, template_name=None, template_host=None):
     collection = processUrl(url)
     db = connDB(collection, 'template')
     if template_name:
         return db.find_one({'name': template_name})
+    elif template_host:
+        return db.find_one({'host': template_host})
     else:
         return db.find()
 
@@ -72,13 +80,15 @@ def getProxy(url):
     return db.find()
 
 
-def getLog():
-    db = connDB('log', 'zabbixlog')
+def getLog(url):
+    collection = processUrl(url)
+    db = connDB(collection, 'log')
     return db.find()
 
 
-def insertLog(log):
-    db = connDB('log', 'zabbixlog')
+def insertLog(url, log):
+    collection = processUrl(url)
+    db = connDB(collection, 'log')
     db.insert(log)
 
 
@@ -186,6 +196,12 @@ def getMaintenance(url, name=None):
         return db.find()
 
 
+def delMaintenance(url, name):
+    collection = processUrl(url)
+    db = connDB(collection, 'maintenance')
+    db.remove({"name": name})
+
+
 def changeMaintenanceStatus(url, name, status):
     collection = processUrl(url)
     db = connDB(collection, 'maintenance')
@@ -193,7 +209,7 @@ def changeMaintenanceStatus(url, name, status):
 
 if __name__ == '__main__':
     db = connDB('zabbix164', 'host')
-    result = getMaintenance('http:123.59.6.164/aaa')
+    result = getTemplate('http:123.59.6.164/aaa')
     for i in result:
         print i
     #  print db.find_one()

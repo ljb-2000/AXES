@@ -1,15 +1,13 @@
 {% extends 'base/bases.html' %}
 {% block content %}
-<h3><i class="fa fa-angle-right"></i>配置管理</h3>
-<div class="row mt">
-    <div class="col-lg-12">
-        <div class="content-panel">
+<h4><i class="fa fa-angle-right"></i>Zabbix管理----未监控项目列表</h4>
+<br />
             <ul class="nav nav-tabs">
                 <li>
-                <a href="{% url "isjkgamelisturl" %}"><h5><i class="fa fa-angle-right"></i>已被监控</h5></a>
+                <a href="{% url "isjkgamelisturl" %}">已被监控</a>
                 </li>
                 <li class="active">
-                <a href="{% url "notjkgamelisturl" %}"><h5><i class="fa fa-angle-right"></i>暂未监控</h5></a>
+                <a href="{% url "notjkgamelisturl" %}">暂未监控</a>
                 </li>
             </ul>
             <br />
@@ -43,7 +41,4 @@
                     <input type='submit' class="btn btn-theme02" value='新增主机' />
                 </section>
             </form>
-        </div><!-- /content-panel -->
-    </div><!-- /col-lg-4 -->
-</div><!-- /row -->
 {% endblock %}

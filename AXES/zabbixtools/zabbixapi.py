@@ -28,7 +28,7 @@ def decrypt(password):
 def auth(url):
     ip = re.search(port_regular, url).group() if re.search(port_regular, url) else re.search(ip_regular, url).group()
     try:
-        conn = MySQLdb.connect(host='localhost', user="root", passwd="root", db="AXESDatabases", port=3306)
+        conn = MySQLdb.connect(host='127.0.0.1', user="root", passwd="root", db="AXESDatabases", port=3306)
         cur = conn.cursor()
         sql_str = "select username, password from systemmanage_zabbixurl where url='%s'" %ip
         cur.execute(sql_str)
@@ -115,10 +115,10 @@ def createHost(url, host):
     new_host_infos = processData(url, method, params, auth_code)
     if 'error' in new_host_infos:
         error = processLogData('create host', new_host_infos['error'], url, params, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = processLogData('create host', new_host_infos['result'], url, params, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
         document = getHostInfo(url, host_name=host['host_ip'].split(';')[0])['result'][0]
         db.createHost(url, document)
     print new_host_infos
@@ -146,10 +146,10 @@ def createOneHost(url, host, macros=None):
         new_host_infos = processData(url, method, params, auth_code)
         if 'error' in new_host_infos:
             error = processLogData('create host', new_host_infos['error'], url, params, 'error')
-            db.insertLog(log=error)
+            db.insertLog(url, log=error)
         else:
             success = processLogData('create host', new_host_infos['result'], url, params, 'success')
-            db.insertLog(log=success)
+            db.insertLog(url, log=success)
             document = getHostInfo(url, host_name=host['host_ip'].split(';')[0])['result'][0]
             db.createHost(url, document)
         return new_host_infos
@@ -165,10 +165,10 @@ def createOneHost(url, host, macros=None):
         new_host_infos = processData(url, method, params, auth_code)
         if 'error' in new_host_infos:
             error = processLogData('create host', new_host_infos['error'], url, params, 'error')
-            db.insertLog(log=error)
+            db.insertLog(url, log=error)
         else:
             success = processLogData('create host', new_host_infos['result'], url, params, 'success')
-            db.insertLog(log=success)
+            db.insertLog(url, log=success)
             document = getHostInfo(url, host_name=host['host_ip'].split(';')[0])['result'][0]
             db.createHost(url, document)
         return new_host_infos
@@ -186,10 +186,10 @@ def deleteHost(url, host_id=None, group_id=None):
     delete_info = processData(url, method, params, auth_code)
     if 'error' in delete_info:
         error = processLogData('delete host', delete_info['error'], url, params, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = processLogData('delete host', delete_info['result'], url, params, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
         if host_id:
             db.deleteHost(url, host_id=host_id)
         else:
@@ -203,24 +203,28 @@ def updateHost(url, host_id, name_new, template_old, template_new, group_new, st
     method = "host.update"
     params = {
         "hostid": host_id,
-        "templates_clear": template_old,
+        "templates_clear": [{
+            "templateid": template_old,
+        }]
     }
     print processData(url, method, params, auth_code)
     params = {
         "hostid": host_id,
         "name": name_new,
-        "templates": template_new,
+        "templates": [{
+            "templateid": template_new,
+        }],
         "groups": group_new,
         "status": status,
         "macros": macros,
     }
     update_info = processData(url, method, params, auth_code)
     if 'error' in update_info:
-        error = processLogData('delete host', update_info['error'], url, params, 'error')
-        db.insertLog(log=error)
+        error = processLogData('update host', update_info['error'], url, params, 'error')
+        db.insertLog(url, log=error)
     else:
-        success = processLogData('delete host', update_info['result'], url, params, 'success')
-        db.insertLog(log=success)
+        success = processLogData('update host', update_info['result'], url, params, 'success')
+        db.insertLog(url, log=success)
         document = getHostInfo(url, host_id=host_id)['result'][0]
         db.updateHost(url=url, host_id=host_id, update=document)
     return update_info
@@ -236,10 +240,10 @@ def updateMacros(url, host_id, macros):
     update_info = processData(url, method, params, auth_code)
     if 'error' in update_info:
         error = processLogData('update macros', update_info['error'], url, params, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = processLogData('update macros', update_info['result'], url, params, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
         document = getHostInfo(url, host_id=host_id)['result'][0]
         db.updateHost(url=url, host_id=host_id, update=document)
     return update_info
@@ -334,10 +338,10 @@ def createGroup(url, group_name):
     new_group_infos = processData(url, method, params, auth_code)
     if 'error' in new_group_infos:
         error = processLogData('update group', new_group_infos['error'], url, params, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = processLogData('update group', new_group_infos['result'], url, params, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
         document = getGroupInfo(url, group_name=group_name)['result'][0]
         document['hosts'] = len(document['hosts'])
         db.createGroup(url, document=document)
@@ -352,10 +356,10 @@ def deleteGroup(url, group_ids):
     delete_groups_info = processData(url, method, params, auth_code)
     if 'error' in delete_groups_info:
         error = processLogData('delete group', delete_groups_info['error'], url, params, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = processLogData('delete group', delete_groups_info['result'], url, params, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
         db.deleteGroup(url, group_ids)
     return delete_groups_info
 
@@ -370,10 +374,10 @@ def updateGroup(url, group_id, group_name):
     update_group = processData(url, method, params, auth_code)
     if 'error' in update_group:
         error = processLogData('update group', update_group['error'], url, params, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = processLogData('update group', update_group['result'], url, params, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
         db.updateGroup(url, group_id=group_id, name=group_name)
     return update_group
 
@@ -521,11 +525,11 @@ def updateTemplate(url, template_id, host_new, name_new, linked_template_old, li
     update_info = processData(url, method, params, auth_code)
     if 'error' in update_info:
         error = processLogData('update template', update_info['error'], url, params, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = {}
         success = processLogData('update template', update_info['result'], url, params, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
         document = getTemplateInfo(url, template_name=name_new)['result'][0]
         db.createTemplate(url, template_id=template_id, update=document)
     return update_info
@@ -565,10 +569,10 @@ def createMaintenance(url, params):
     create_info = processData(url, method, params, auth_code)
     if 'error' in create_info:
         error = processLogData('create maintenance', create_info['error'], url, params, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = processLogData('create maintenance', create_info['result'], url, params, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
     return create_info
 
 
@@ -628,10 +632,10 @@ def stopMaintenance(url, maintenance_name, end_time):
     detail['groups'] = ', '.join([group['name'] for group in maintenance_info['result'][0]['groups']])
     if 'error' in update_info:
         error = processLogData('stop maintenance', update_info['error'], url, detail, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = processLogData('stop maintenance', {'maintenanceid': update_info['result']['maintenanceids'][0]}, url, detail, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
         db.changeMaintenanceStatus(url, maintenance_name, 0)
     return update_info
 
@@ -642,9 +646,6 @@ def startMaintenance(url, maintenance_name, active_since, active_till, start_tim
     maintenance_info = getMaintenance(url, maintenance_name=maintenance_name)
     groupids = [group['groupid'] for group in maintenance_info['result'][0]['groups']]
     hostids = [host['hostid'] for host in maintenance_info['result'][0]['hosts']]
-    #  timeperiods = maintenance_info['result'][0]['timeperiods']
-    #  timeperiods[0]['period'] = "86400"
-    #  timeperiods[0]['start_time'] = start_time
     params = {
         "maintenanceid": maintenance_info['result'][0]['maintenanceid'],
         "active_since": active_since,
@@ -665,10 +666,10 @@ def startMaintenance(url, maintenance_name, active_since, active_till, start_tim
     detail['groups'] = ', '.join([group['name'] for group in maintenance_info['result'][0]['groups']])
     if 'error' in update_info:
         error = processLogData('start maintenance', update_info['error'], url, detail, 'error')
-        db.insertLog(log=error)
+        db.insertLog(url, log=error)
     else:
         success = processLogData('start maintenance', {'maintenanceid': update_info['result']['maintenanceids'][0]}, url, detail, 'success')
-        db.insertLog(log=success)
+        db.insertLog(url, log=success)
         db.changeMaintenanceStatus(url, maintenance_name, 1)
     return update_info
 
@@ -685,17 +686,58 @@ def manageMonitoring(url, host_ids, status):
         status_str = 'off' if status == "1" else 'up'
         if 'error' in update_info:
             error = processLogData('%s monitoring' %status_str, update_info['error'], url, params, 'error')
-            db.insertLog(log=error)
+            db.insertLog(url, log=error)
         else:
             success = {}
             success = processLogData('%s monitoring' %status_str, update_info['result'], url, params, 'success')
-            db.insertLog(log=success)
+            db.insertLog(url, log=success)
             db.manageStatus(url=url, host_id=host_id, status=status)
+
+
+def delMaintenance(url, maintenanceids):
+    auth_code = auth(url)
+    method = "maintenance.delete"
+    params = maintenanceids
+    maintenance_name = [getMaintenance(url, maintenanceid)['result'][0]['name'] for maintenanceid in maintenanceids]
+    del_info = processData(url, method, params, auth_code)
+    if "error" in del_info:
+        error = processLogData('delete maintenance', del_info['error'], url, params, 'error')
+        db.insertLog(url, log=error)
+    else:
+        success = {}
+        success = processLogData('delete maintenance', del_info, url, {'name': '; '.join(maintenance_name)}, 'success')
+        db.insertLog(url, log=success)
+        for name in maintenance_name:
+            db.delMaintenance(url, name)
+
+
+def isHostExist(url, host_id=None, host=None, name=None):
+    auth_code = auth(url)
+    method = "host.exists"
+    if host_id:
+        params = {
+            "hostid": host_id,
+        }
+    elif host:
+        params = {
+            "host": host,
+        }
+    elif name:
+        params = {
+            "name": name,
+        }
+    else:
+        return False
+    return processData(url, method, params, auth_code)['result']
 
 
 if __name__ == '__main__':
     url = "http://123.59.6.164/api_jsonrpc.php"
-    print json.dumps(getMaintenance(url, maintenance_name='4442'), indent=4)
+    print len(getHostInfo(url)['result'])
+    #  print json.dumps(getHostInfo(url)['result'], indent=4)
+    #  delMaintenance(url, ["67"])
+    #  print isHostExist(url)
+    #  print json.dumps(getMaintenance(url, maintenance_name='test'), indent=4)
     #  print json.dumps(getGroupInfo(url, group_id="179"), indent=4)
     #  print isGroup(url, "aaa")
     #  print json.dumps(getHostInfo(url, host_id="12243"))

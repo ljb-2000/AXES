@@ -5,72 +5,65 @@
         $("#del_id").val(testid);
     }
 </script>
-<h3><i class="fa fa-angle-right"></i>配置管理</h3>
-<div class="row mt">
-    <div class="col-lg-12">
-        <div class="content-panel">
-            <h4><i class="fa fa-angle-right"></i>主机列表(所属项目:{{game_name}})</h4>
-            <form class="form-horizontal style-form" method="post" action="{% url 'managehosturl' game_name %}">
-                {% csrf_token %}
-                <section id="unseen">
-                    <table id="table_id" class="table table-bordered table-striped table-condensed">
-                        <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>host</th>
-                                <th>name</th>
-                                <th>group</th>
-                                <th>proxy</th>
-                                <th>template</th>
-                                <th>status</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i in list %}
-                            <tr>
-                                <td>
-                                    <span class="check">
-                                        <input name="host_list" type="checkbox" class="checked" value="{{i.hostid}}">
-                                        </input>
-                                    </span>
-                                    {{i.hostid}}
-                                </td>
-                                <td><a href="{% url 'hostinfourl' i.host%}">{{i.host}}</a></td>
-                                <td><a href="{% url 'hostinfourl' i.host%}">{{i.name}}</a></td>
-                                <td>
-                                    {% for j in i.groups %}
-                                    {{j.name}};
-                                    {% endfor %}
-                                </td>
-                                <td>
-                                    {% for j in proxy %}
-                                    {% if j.proxyid == i.proxy_hostid %}{{j.name}}{% endif %}
-                                    {% endfor %}
-                                </td>
-                                <td>
-                                    {% for j in i.parentTemplates %}
-                                    {{j.name}};
-                                    {% endfor %}
-                                </td>
-                                <td>{{i.status}}</td>
-                                <td>
-                                    <button type="button" id="{{i.hostid}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-delete" onclick="return buttontest(this.id)"><i class="fa fa-trash-o"></i></button>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <a  href="{% url 'createhosturl' %}"><input type="button" class="btn btn-theme02" value="创建主机" /></a>
-                    <input type="submit" class="btn btn-theme02" name="create" id="create" value="批量创建主机" />
-                    <input type="submit" class="btn btn-theme02" name="off_hosts" id="off_hosts" value="禁用监控" />
-                    <input type="submit" class="btn btn-theme02" name="on_hosts" id="on_hosts" value="开启监控" />
-                    <input type='submit' class="btn btn-theme02" name="delete" id="delete" value="删除主机" />
-                </section>
-            </form>
-        </div><!-- /content-panel -->
-    </div><!-- /col-lg-4 -->
-</div><!-- /row -->
+<h4><i class="fa fa-angle-right"></i>Zabbix管理----主机列表(所属项目:{{game_name}})</h4>
+<form class="form-horizontal style-form" method="post" action="{% url 'managehosturl' game_name %}">
+    {% csrf_token %}
+    <section id="unseen">
+        <table id="table_id" class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>host</th>
+                    <th>name</th>
+                    <th>group</th>
+                    <th>proxy</th>
+                    <th>template</th>
+                    <th>status</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in list %}
+                <tr>
+                    <td>
+                        <span class="check">
+                            <input name="host_list" type="checkbox" class="checked" value="{{i.hostid}}">
+                            </input>
+                        </span>
+                        {{i.hostid}}
+                    </td>
+                    <td><a href="{% url 'hostinfourl' i.host%}">{{i.host}}</a></td>
+                    <td><a href="{% url 'hostinfourl' i.host%}">{{i.name}}</a></td>
+                    <td>
+                        {% for j in i.groups %}
+                        {{j.name}};
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for j in proxy %}
+                        {% if j.proxyid == i.proxy_hostid %}{{j.name}}{% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for j in i.parentTemplates %}
+                        {{j.name}};
+                        {% endfor %}
+                    </td>
+                    <td>{{i.status}}</td>
+                    <td>
+                        <button type="button" id="{{i.hostid}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-delete" onclick="return buttontest(this.id)"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'createhosturl' %}"><input type="button" class="btn btn-theme02" value="创建主机" /></a>
+        <input type="submit" class="btn btn-theme02" name="create" id="create" value="批量创建主机" />
+        <input type="submit" class="btn btn-theme02" name="off_hosts" id="off_hosts" value="禁用监控" />
+        <input type="submit" class="btn btn-theme02" name="on_hosts" id="on_hosts" value="开启监控" />
+        <input type='submit' class="btn btn-theme02" name="delete" id="delete" value="删除主机" />
+    </section>
+</form>
 <form class="form-horizontal style-form" method="post" action="{% url 'delhostprojecturl' game_name%}">
     {% csrf_token %}
     <div class="modal fade" id="myModal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

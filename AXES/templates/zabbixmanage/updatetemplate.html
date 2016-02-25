@@ -11,203 +11,197 @@
                     })
             })
 </script>
-<h3><i class="fa fa-angle-right"></i> zabbix管理</h3>
+<h4><i class="fa fa-angle-right"></i>zabbix管理----更新模板</h4>
+<br />
 <!-- BASIC FORM ELELEMNTS -->
-<div class="row mt mb">
-    <div class="col-md-12">
-        <div class="form-panel">
-            <h4 class="mb"><i class="fa fa-angle-right"></i>更新模板</h4>
-            <form class="form-horizontal style-form" method="post" action="{% url 'updatetemplateurl' TNAME %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">id</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="" id="" class="form-control round-form" value="{{template_dict.templateid}}" readOnly='True'></input>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">host</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="" id="" class="form-control round-form" value="{{template_dict.host}}"></input>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">name</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="" id="" class="form-control round-form" value="{{template_dict.name}}"></input>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">linked template</label>
-                    <div class="col-sm-10">
-                        {% for i in is_linked_list %}
-                        <input type="checkbox" name="is_linked_template_list" value="{{i.templateid}}" checked="checked">{{i.name}}
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">template</label>
-                </div>
-                <div class="form-group">
-                    <div class="row-fluid">
-                        {% for i in options %}
-                        {% if i.name != TNAME%}
-                        {% if i.templateid not in is_linked %}
-                        <div class="col-xs-3 span3">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="linked_template_list" value="{{i.templateid}}">{{i.name}}
-                                </input>
-                            </label>
-                        </div>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-                <button type="button" class="btn btn-theme02" data-toggle="modal" data-target="#Macros-global">查看全局宏</button>
-                <table id="tab_macro" class="table table-striped table-advance table-hover">
-                    <h5><i class="fa fa-tasks"></i>宏</h5>
-                    <thead>
-                        <tr>
-                            <th>macro</th>
-                            <th>value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if macros_flag == 0 %}
-                        <td>
-                            <label class="col-sm-2 col-sm-2 control-label">未设置宏</label>
-                        </td>
-                        <td></td>
-                        {% else %}
-                        {% for macros in macros_list %}
-                        <tr>
-                            <td>
-                                <input type="text" class="form-control" id="macro_key" name="macro_key" value="{{macros.macro}}" />
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="macro_value" name="macro_value" value="{{macros.value}}" />
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        {% endif %}
-                    </tbody>
-                </table>
-                <button type="button" id="but" class="btn btn-theme02">增加宏</button>
-                <button type="button" class="btn btn-theme02" data-toggle="modal" data-target="#Macros-delete">删除宏</button>
-                <div class="modal fade" id="Macros-global" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">操作确认</h4>
-                            </div>
-                            <div class="modal-body">
-                                <table id="table_id" class="table table-striped table-advance table-hover">
-                                    <h5><i class="fa fa-tasks"></i>全局宏</h5>
-                                    <thead>
-                                        <tr>
-                                            <th>id</th>
-                                            <th>宏</th>
-                                            <th>value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for macro in global_macros %}
-                                        <tr>
-                                            <td>{{macro.globalmacroid}}</td>
-                                            <td>{{macro.macro}}</td>
-                                            <td>{{macro.value}}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-default" data-dismiss="modal">OK</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="Macros-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">操作确认</h4>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table table-striped table-advance table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>macro</th>
-                                            <th>value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% if macros_flag == 0 %}
-                                        <th>
-                                            <label class="col-sm-12 control-label">未设置宏</label>
-                                        </th>
-                                        <th></th>
-                                        {% else %}
-                                        {% for macros in macros_list %}
-                                        <tr>
-                                            <td>
-                                                <span class="check">
-                                                    <input name="macro_list" type="checkbox" class="checked" value="{{macros.macro}}">
-                                                    </input>
-                                                </span>
-                                                {{macros.macro}}
-                                            </td>
-                                            <td>
-                                                {{macros.value}}
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                        {% endif %}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" name="del-macro" class="btn btn-primary" name="create-macro">确认</button>
-                                <button class="btn btn-default" data-dismiss="modal">取消</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <table id="table_id1" class="table table-striped table-advance table-hover">
-                    <h5><i class="fa fa-tasks"></i>监控项</h5>
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>监控项</th>
-                            <th>描述</th>
-                            <th>状态</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in item_list %}
-                        <tr>
-                            <td>
-                                {{item.itemid}}
-                            </td>
-                            <td>{{item.name}}</td>
-                            <td>{{item.description}}</td>
-                            <td>{{item.status}}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <br />
-                <div class="form-group">
-                    <div class="col-sm-10">
-                        <button type="submit" name="update" class="btn btn-theme02">保存</button>
-                        <input type="button" class="btn btn-theme02" onclick="javascript:history.back(-1);" value="返回上一页" />
-                    </div>
-                </div>
-            </form>
+<form class="form-horizontal style-form" method="post" action="{% url 'updatetemplateurl' TNAME %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">id</label>
+        <div class="col-sm-10">
+            <input type="text" name="" id="" class="form-control round-form" value="{{template_dict.templateid}}" readOnly='True'></input>
         </div>
     </div>
-</div>
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">host</label>
+        <div class="col-sm-10">
+            <input type="text" name="" id="" class="form-control round-form" value="{{template_dict.host}}"></input>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">name</label>
+        <div class="col-sm-10">
+            <input type="text" name="" id="" class="form-control round-form" value="{{template_dict.name}}"></input>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">linked template</label>
+        <div class="col-sm-10">
+            {% for i in is_linked_list %}
+            <input type="checkbox" name="is_linked_template_list" value="{{i.templateid}}" checked="checked">{{i.name}}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">template</label>
+    </div>
+    <div class="form-group">
+        <div class="row-fluid">
+            {% for i in options %}
+            {% if i.name != TNAME%}
+            {% if i.templateid not in is_linked %}
+            <div class="col-xs-3 span3">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="linked_template_list" value="{{i.templateid}}">{{i.name}}
+                    </input>
+                </label>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <button type="button" class="btn btn-theme02" data-toggle="modal" data-target="#Macros-global">查看全局宏</button>
+    <table id="tab_macro" class="table table-striped table-advance table-hover">
+        <h5><i class="fa fa-tasks"></i>宏</h5>
+        <thead>
+            <tr>
+                <th>macro</th>
+                <th>value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if macros_flag == 0 %}
+            <td>
+                <label class="col-sm-2 col-sm-2 control-label">未设置宏</label>
+            </td>
+            <td></td>
+            {% else %}
+            {% for macros in macros_list %}
+            <tr>
+                <td>
+                    <input type="text" class="form-control" id="macro_key" name="macro_key" value="{{macros.macro}}" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" id="macro_value" name="macro_value" value="{{macros.value}}" />
+                </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <button type="button" id="but" class="btn btn-theme02">增加宏</button>
+    <button type="button" class="btn btn-theme02" data-toggle="modal" data-target="#Macros-delete">删除宏</button>
+    <div class="modal fade" id="Macros-global" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow:auto;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">操作确认</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="table_id" class="table table-striped table-advance table-hover">
+                        <h5><i class="fa fa-tasks"></i>全局宏</h5>
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>宏</th>
+                                <th>value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for macro in global_macros %}
+                            <tr>
+                                <td>{{macro.globalmacroid}}</td>
+                                <td>{{macro.macro}}</td>
+                                <td>{{macro.value}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Macros-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">操作确认</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                            <tr>
+                                <th>macro</th>
+                                <th>value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if macros_flag == 0 %}
+                            <th>
+                                <label class="col-sm-12 control-label">未设置宏</label>
+                            </th>
+                            <th></th>
+                            {% else %}
+                            {% for macros in macros_list %}
+                            <tr>
+                                <td>
+                                    <span class="check">
+                                        <input name="macro_list" type="checkbox" class="checked" value="{{macros.macro}}">
+                                        </input>
+                                    </span>
+                                    {{macros.macro}}
+                                </td>
+                                <td>
+                                    {{macros.value}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="del-macro" class="btn btn-primary" name="create-macro">确认</button>
+                    <button class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table id="table_id1" class="table table-striped table-advance table-hover">
+        <h5><i class="fa fa-tasks"></i>监控项</h5>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>监控项</th>
+                <th>描述</th>
+                <th>状态</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in item_list %}
+            <tr>
+                <td>
+                    {{item.itemid}}
+                </td>
+                <td>{{item.name}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.status}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br />
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="submit" name="update" class="btn btn-theme02">保存</button>
+            <input type="button" class="btn btn-theme02" onclick="javascript:history.back(-1);" value="返回上一页" />
+        </div>
+    </div>
+</form>
 {% endblock %}

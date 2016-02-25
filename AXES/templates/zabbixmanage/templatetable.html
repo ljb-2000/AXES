@@ -1,34 +1,28 @@
 {% extends 'base/bases.html' %}
 {% block content %}
-<h3><i class="fa fa-angle-right"></i>zabbix管理</h3>
+<h4><i class="fa fa-angle-right"></i>zabbix管理----模板列表</h4>
+<br />
 <form action="" methon='post'>
-    <div class="row mt">
-        <div class="col-lg-12">
-            <div class="content-panel">
-                <h4><i class="fa fa-angle-right"></i> 模板列表</h4>
-                <section id="unseen">
-                    <table id="table_id" class="table table-bordered table-striped table-condensed">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Host</th>
-                                <th>Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i in list %}
-                            <tr>
-                                <td>{{i.templateid}}</td>
-                                <td><a href="{% url 'updatetemplateurl' i.name %}">{{i.host}}</a></td>
-                                <td><a href="{% url 'updatetemplateurl' i.name %}">{{i.name}}</a></td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </section>
-            </div><!-- /content-panel -->
-        </div><!-- /col-lg-4 -->
-    </div><!-- /row -->
+    <section id="unseen">
+        <table id="table_id" class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Host</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in list %}
+                <tr>
+                    <td>{{i.templateid}}</td>
+                    <td><a href="{% url 'updatetemplateurl' i.name %}">{{i.host}}</a></td>
+                    <td><a href="{% url 'updatetemplateurl' i.name %}">{{i.name}}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
     <br />
     <input type='submit' class="btn btn-theme02" value='新增模板' />
 </form>
