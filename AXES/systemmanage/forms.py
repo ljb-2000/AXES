@@ -6,6 +6,7 @@ from models import Game, Idc, ZabbixUrl
 
 
 class addGameForm(forms.ModelForm):
+
     class Meta:
         model = Game
         fields = ('game_name_cn', 'game_name_py', 'game_system')
@@ -40,6 +41,7 @@ class addGameForm(forms.ModelForm):
 
 
 class addIdcForm(forms.ModelForm):
+
     class Meta:
         model = Idc
         fields = ('idc_name_cn', 'idc_name_py', 'proxy_name', 'ip')
@@ -81,6 +83,7 @@ class addIdcForm(forms.ModelForm):
 
 
 class addUrlForm(forms.ModelForm):
+
     class Meta:
         model = ZabbixUrl
         fields = ('url', 'username', 'password')

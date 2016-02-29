@@ -95,6 +95,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_URL = "/"
+
 #  AUTH_USER_MODEL = 'systemmanage.User'
 
 # Static files (CSS, JavaScript, Images)

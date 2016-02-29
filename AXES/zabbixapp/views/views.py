@@ -1,7 +1,8 @@
 # encoding: utf-8
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, HttpResponse
-from systemmanage.models import Game, ZabbixUrl, Idc
+from systemmanage.models import Game, ZabbixUrl
 import zabbixtools.zabbixapi as zabbixapi
 import zabbixscript
 import zabbixtools.models_mongodb as db
@@ -32,6 +33,7 @@ CHINESE_ENGILSH = {
 }
 
 
+@login_required
 def getCookieUrl(request):
     if request.COOKIES.get('url'):
         url = request.COOKIES.get('url')
@@ -40,6 +42,7 @@ def getCookieUrl(request):
     return url
 
 
+@login_required
 def getUrlView(request, URL):
     if URL:
         url = "http://" + URL + "/api_jsonrpc.php"
@@ -51,6 +54,7 @@ def getUrlView(request, URL):
     return httpresponse
 
 
+@login_required
 def notjkGameListView(request):
     url = getCookieUrl(request)
     games_info = Game.objects.all()
@@ -66,6 +70,7 @@ def notjkGameListView(request):
     return render(request, 'zabbixmanage/gametablenotjk.html', context_dict)
 
 
+@login_required
 def jkGameListView(request):
     url = getCookieUrl(request)
     zabbix_url = ZabbixUrl.objects.all()
@@ -85,6 +90,7 @@ def jkGameListView(request):
     return render(request, 'zabbixmanage/gametableisjk.html', context_dict)
 
 
+@login_required
 def templateListView(request):
     url = getCookieUrl(request)
     template_info = db.getTemplate(url)
@@ -94,6 +100,7 @@ def templateListView(request):
     return render(request, 'zabbixmanage/templatetable.html', context_dict)
 
 
+@login_required
 def groupListView(request):
     url = getCookieUrl(request)
     group_info = db.getGroup(url)
@@ -103,6 +110,7 @@ def groupListView(request):
     return render(request, 'zabbixmanage/grouptable.html', context_dict)
 
 
+@login_required
 def createGroupView(request):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -113,6 +121,7 @@ def createGroupView(request):
         return render(request, 'zabbixmanage/creategroup.html')
 
 
+@login_required
 def delGroupAndHostView(request):
     url = getCookieUrl(request)
     group_ids = request.REQUEST.getlist('group_list')
@@ -122,6 +131,7 @@ def delGroupAndHostView(request):
     return HttpResponseRedirect(reverse('grouplisturl'))
 
 
+@login_required
 def delGroupView(request):
     url = getCookieUrl(request)
     id_list = []
@@ -131,6 +141,7 @@ def delGroupView(request):
     return HttpResponseRedirect(reverse('grouplisturl'))
 
 
+@login_required
 def delHostByNameView(request):
     url = getCookieUrl(request)
     game_name_cn = request.POST['del_names']
@@ -142,6 +153,7 @@ def delHostByNameView(request):
     return HttpResponseRedirect(reverse('isjkgamelisturl'))
 
 
+@login_required
 def delHostView(request, GNAME):
     url = getCookieUrl(request)
     host_id = request.POST['del_id']
@@ -149,6 +161,7 @@ def delHostView(request, GNAME):
     return HttpResponseRedirect(reverse('grouphostlisturl', args=[GNAME]))
 
 
+@login_required
 def delHostProjectView(request, GNAME):
     url = getCookieUrl(request)
     host_id = request.POST['del_id']
@@ -156,6 +169,7 @@ def delHostProjectView(request, GNAME):
     return HttpResponseRedirect(reverse('hostlisturl', args=[GNAME]))
 
 
+@login_required
 def manageHostView(request, GNAME):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -196,6 +210,7 @@ def manageHostView(request, GNAME):
             return HttpResponseRedirect(reverse('hostlisturl', args=[GNAME]))
 
 
+@login_required
 def createHostsView(request):
     url = getCookieUrl(request)
     game_list = request.REQUEST.getlist('game_list')
@@ -221,6 +236,7 @@ def createHostsView(request):
     return render(request, 'zabbixmanage/createhost.html', context_dict)
 
 
+@login_required
 def createHostView(request):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -263,6 +279,7 @@ def createHostView(request):
     return render(request, 'zabbixmanage/createonehost.html', context_dict)
 
 
+@login_required
 def hostListView(request, GNAME):
     url = getCookieUrl(request)
     all_group = db.getGroup(url)
@@ -287,6 +304,7 @@ def hostListView(request, GNAME):
     return render(request, 'zabbixmanage/hostlist.html', context_dict)
 
 
+@login_required
 def groupHostListView(request, GNAME):
     url = getCookieUrl(request)
     group_name = db.getGroup(url, group_id=GNAME)['name']
@@ -307,6 +325,7 @@ def groupHostListView(request, GNAME):
     return render(request, 'zabbixmanage/hostlist.html', context_dict)
 
 
+@login_required
 def updateTemplateView(request, TNAME):
     url = getCookieUrl(request)
     result = db.getTemplate(url, template_name=TNAME)
@@ -353,6 +372,7 @@ def updateTemplateView(request, TNAME):
     return render(request, 'zabbixmanage/updatetemplate.html', context_dict)
 
 
+@login_required
 def oneHostInfoView(request, HNAME):
     url = getCookieUrl(request)
     result = db.getHost(url, host_name=HNAME)
@@ -427,6 +447,7 @@ def oneHostInfoView(request, HNAME):
     return render(request, 'zabbixmanage/updatehost.html', context_dict)
 
 
+@login_required
 def proxyListView(request):
     url = getCookieUrl(request)
     result = db.getProxy(url)
@@ -443,6 +464,7 @@ def proxyListView(request):
     return render(request, 'zabbixmanage/proxylist.html', context_dict)
 
 
+@login_required
 def updateGroupView(request, GID):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -459,6 +481,7 @@ def updateGroupView(request, GID):
     return render(request, 'zabbixmanage/updategroup.html', context_dict)
 
 
+@login_required
 def maintenanceListView(request):
     url = getCookieUrl(request)
     maintenance_list = []
@@ -483,6 +506,7 @@ def maintenanceListView(request):
     return render(request, 'zabbixmanage/maintenancelist.html', context_dict)
 
 
+@login_required
 def calendarView(request):
     url = getCookieUrl(request)
     #  print request.method
@@ -582,6 +606,7 @@ def binToDec(num):
     return bin(num).split('0b')[1]
 
 
+@login_required
 def createMaintenanceView(request):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -686,6 +711,7 @@ def createMaintenanceView(request):
     return render(request, 'zabbixmanage/createmaintenance.html', context_dict)
 
 
+@login_required
 def delMaintenanceView(request, MNAME):
     url = getCookieUrl(request)
     MID = zabbixapi.getMaintenance(url, maintenance_name=MNAME)['result'][0]['maintenanceid']
@@ -693,6 +719,7 @@ def delMaintenanceView(request, MNAME):
     return HttpResponseRedirect(reverse('maintenancelisturl'))
 
 
+@login_required
 def notDeployAndHostViews(request, PNAME):
     url = getCookieUrl(request)
     zabbix_host = db.regexGetHost(url, PNAME)
@@ -710,6 +737,7 @@ def notDeployAndHostViews(request, PNAME):
     return render(request, 'zabbixmanage/notdeployanddb.html', context_dict)
 
 
+@login_required
 def sealAndZabbixViews(request):
     url = getCookieUrl(request)
     dicts = {}
@@ -737,6 +765,7 @@ def getDataFromTxt():
     return project_list
 
 
+@login_required
 def groupInProjectView(request):
     url = getCookieUrl(request)
     project_name = request.POST.get('PROJECT')

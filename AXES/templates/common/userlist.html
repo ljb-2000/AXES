@@ -1,0 +1,38 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<h4><i class="fa fa-angle-right"></i>用户管理----用户列表</h4>
+<br />
+            <section id="unseen">
+                <table id="table_id" class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>邮箱</th>
+                            <th>角色</th>
+                            <th>权限</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in list %}
+                        <tr>
+                            <td>{{i.user.username}}</td>
+                            <td>{{i.user.email}}</td>
+                            <td>{{i.role}}</td>
+                            <td>
+                                {% for j in i.permission.all %}
+                                    {{j}}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{% url 'edituserurl' i.user.id %}"><button type="button" class="btn btn-primary btn-xs" onclick="return confirm('是否确认修改？')"><i class="fa fa-pencil"></i></button></a>
+                                <a href="{% url 'deluserurl' i.user.id %}"><button type="button" class="btn btn-danger btn-xs" onclick="return confirm('是否确认删除？')"><i class="fa fa-trash-o"></i></button></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+<br />
+<a href="{% url "adduserurl" %}"><button type="button" name="create-user" class="btn btn-theme02">创建用户</button></a>
+{% endblock %}

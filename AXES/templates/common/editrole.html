@@ -1,0 +1,36 @@
+{% extends 'base/bases.html' %}
+{% load staticfiles %}
+{% block content %}
+<link href="{% static "css/bootstrap-duallistbox.css" %}" rel="stylesheet" />
+<h4><i class="fa fa-angle-right"></i> 用户管理----角色修改</h4>
+<br />
+<!-- BASIC FORM ELELEMNTS -->
+<form class="form-horizontal style-form" method="post" action="{% url 'editroleurl' ID %}">
+    {% csrf_token %}
+    {% for item in form %}
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">{{item.label}}</label>
+        <div class="col-md-10">
+            {{item}}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-theme02">保存更改</button>
+            <input type="button" class="btn btn-theme02" onclick="javascript:history.back(-1);" value="返回上一页" />
+        </div>
+    </div>
+</form>
+<script src="{% static "js/jquery-1.8.3.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/jquery.bootstrap-duallistbox.min.js" %}"></script>
+<script>
+    var demo1 = $('select[name="url"]').bootstrapDualListbox({
+        nonSelectedListLabel: '可选择权限',
+        selectedListLabel: '已选择权限',
+        preserveSelectionOnMove: 'moved',
+        moveOnSelect: false,
+    });
+</script>
+{% endblock %}

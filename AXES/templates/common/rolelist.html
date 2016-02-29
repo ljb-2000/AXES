@@ -1,0 +1,26 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<h4><i class="fa fa-angle-right"></i>用户管理----角色列表</h4>
+<br />
+    <section id="unseen">
+        <table id="table" class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>角色</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in list %}
+                <tr>
+                    <td>{{i.name}}</td>
+                    <td>
+                        <a href="{% url 'editroleurl' i.id%}"><button type="button" class="btn btn-primary btn-xs" onclick="return confirm('是否确认修改？')"><i class="fa fa-pencil"></i></button></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+<br />
+{% endblock %}

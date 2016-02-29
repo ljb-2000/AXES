@@ -18,8 +18,8 @@
 
         <link rel="stylesheet" type="text/css" href="{% static "media/css/dataTables.bootstrap.css" %}" />    
         <!-- Custom styles for this template -->
-        <link href="{% static "css/style.css" %}" rel="stylesheet">
-        <link href="{% static "css/style-responsive.css" %}" rel="stylesheet">
+        <link href="{% static "css/style.css" %}" rel="stylesheet" />
+        <link href="{% static "css/style-responsive.css" %}" rel="stylesheet" />
 
         <script src="{% static "js/chart-master/Chart.js" %}"></script>
 
@@ -75,12 +75,12 @@
                         <li class="dropdown user user-menu">
                         <a href="#" class="logout dropdown-toggle" data-toggle="dropdown">
                             <i class='fa fa-user'></i>
-                            <span>lee<i class="caret"></i></span>
+                            <span>{{request.user.username}}<i class="caret"></i></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="">修改密码</a></li>
+                            <li><a href="{% url 'changepasswordurl' %}">修改密码</a></li>
                             <li class="divider"></li>
-                            <li><a href="">注销登陆</a></li>
+                            <li><a href="{% url 'logouturl' %}">注销登陆</a></li>
                         </ul>
                         </li>
                     </ul>
@@ -93,8 +93,10 @@
             <!--sidebar start-->
             <aside>
                 <div id="sidebar"  class="nav-collapse ">
+                    {% if request.user.is_authenticated %}
                     <!-- sidebar menu start-->
                     <ul class="sidebar-menu" id="nav-accordion">
+                        {% if request.user.userprofile.role.role == 0 %}
                         <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-cogs"></i>
@@ -106,6 +108,8 @@
                             <li><a href="{% url 'urllisturl' %}">url管理</a></li>
                         </ul>
                         </li>
+                        {% endif %}
+                        {% if request.user.userprofile.role.role == 0 or request.user.userprofile.role.role == 1 %}
                         <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-tasks"></i>
@@ -117,8 +121,21 @@
                             <li><a href="{% url 'grouplisturl' %}">主机组列表</a></li>
                             <li><a href="{% url 'proxylisturl' %}">代理列表</a></li>
                             <li><a href="{% url 'hostlisturl' %}">主机比对</a></li>
+                        </ul endif endif  >
+                        </li>
+                        {% endif %}
+                        {% if request.user.userprofile.role.role == 0 %}
+                        <li class="sub-menu">
+                        <a href="javascript:;" >
+                            <i class="glyphicon glyphicon-user"></i>
+                            <span>用户管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{% url 'userlisturl' %}">用户列表</a></li>
+                            <li><a href="{% url 'rolelisturl' %}">角色列表</a></li>
                         </ul>
                         </li>
+                        {% endif %}
                         <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-desktop"></i>
@@ -142,6 +159,7 @@
                         </li>
                     </ul>
                     <!-- sidebar menu end-->
+                    {% endif %}
                 </div>
             </aside>
             <!-- **********************************************************************************************************************************************************
@@ -159,7 +177,7 @@
             <!--footer start-->
             <footer class="site-footer">
                 <div class="text-center">
-                    2016 - CYOU
+                    2016 - LiXiang 
                     <a class="go-top">
                         <i class="fa fa-angle-up"></i>
                     </a>

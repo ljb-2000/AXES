@@ -15,6 +15,9 @@ class Game(models.Model):
     game_name_py = models.CharField(max_length=100, null=False, unique=True)
     game_system = models.CharField(max_length=100, blank=True)
 
+    def __unicode__(self):
+        return self.game_name_cn
+
 
 class ZabbixUrl(models.Model):
     url = models.CharField(max_length=255, unique=True)

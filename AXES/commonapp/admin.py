@@ -1,10 +1,9 @@
 from django.contrib import admin
-from commonapp.models import UserProfile, Role, Permission, Host
+from commonapp.models import UserProfile, Role, Url
 
 # Register your models here.
 
 
 admin.site.register(UserProfile)
 admin.site.register(Role)
-admin.site.register(Permission)
-admin.site.register(Host)
+admin.site.register(Url)

@@ -1,0 +1,31 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<h4><i class="fa fa-angle-right"></i> 用户管理----用户修改</h4>
+<br />
+<!-- BASIC FORM ELELEMNTS -->
+<form class="form-horizontal style-form" method="post" action="{% url 'edituserurl' ID %}">
+    {% csrf_token %}
+    {% for item in user_form %}
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">{{item.label}}</label>
+        <div class="col-md-10">
+            {{item}}
+        </div>
+    </div>
+    {% endfor %}
+    {% for item in profile_form %}
+    <div class="form-group">
+        <label class="col-sm-2 col-sm-2 control-label">{{item.label}}</label>
+        <div class="col-md-10">
+            {{item}}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-theme02">保存更改</button>
+            <input type="button" class="btn btn-theme02" onclick="javascript:history.back(-1);" value="返回上一页" />
+        </div>
+    </div>
+</form>
+{% endblock %}
