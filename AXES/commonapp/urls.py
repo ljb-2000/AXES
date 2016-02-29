@@ -15,4 +15,5 @@ urlpatterns = patterns(
     url(r'^usermanage/deluser/(?P<ID>[^/]+)/$', views.delUserView, name='deluserurl'),
     url(r'^usermanage/edituser/(?P<ID>[^/]+)/$', views.editUserView, name='edituserurl'),
     url(r'^changepassword/$', views.changePasswordView, name='changepasswordurl'),
+    url(r'^nopermission/$', views.noPermissionView, name='nopermissionurl'),
 )

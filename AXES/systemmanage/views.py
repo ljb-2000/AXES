@@ -7,12 +7,14 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from Crypto.Cipher import AES
 from binascii import b2a_hex, a2b_hex
+from commonapp.views import permissionVerify
 
 the_salt = "oXg#Xk^z4GYP%SEv"
 key = "UmGBaI[YuF]H=hi&"
 
 
 @login_required
+@permissionVerify()
 def idcListView(request):
     idc_info = Idc.objects.all()
     context_dict = {
@@ -22,6 +24,7 @@ def idcListView(request):
 
 
 @login_required
+@permissionVerify()
 def gameListView(request):
     game_info = Game.objects.all()
     context_dict = {
@@ -31,6 +34,7 @@ def gameListView(request):
 
 
 @login_required
+@permissionVerify()
 def addGameView(request):
     if request.method == 'POST':
         form = addGameForm(request.POST)
@@ -46,6 +50,7 @@ def addGameView(request):
 
 
 @login_required
+@permissionVerify()
 def addIdcView(request):
     if request.method == 'POST':
         form = addIdcForm(request.POST)
@@ -61,6 +66,7 @@ def addIdcView(request):
 
 
 @login_required
+@permissionVerify()
 def editIdcView(request, ID):
     idc_info = Idc.objects.get(idc_name_cn=ID)
     if request.method == 'POST':
@@ -78,6 +84,7 @@ def editIdcView(request, ID):
 
 
 @login_required
+@permissionVerify()
 def delIdcView(request):
     ID = request.POST.get('del_id')
     Idc.objects.get(idc_name_cn=ID).delete()
@@ -85,6 +92,7 @@ def delIdcView(request):
 
 
 @login_required
+@permissionVerify()
 def editGameView(request, ID):
     game_info = Game.objects.get(game_name_cn=ID)
     if request.method == 'POST':
@@ -102,6 +110,7 @@ def editGameView(request, ID):
 
 
 @login_required
+@permissionVerify()
 def delGameView(request):
     GAME = request.POST.get('del_id')
     Game.objects.get(game_name_cn=GAME).delete()
@@ -109,6 +118,7 @@ def delGameView(request):
 
 
 @login_required
+@permissionVerify()
 def urlListView(request):
     zabbix_url = ZabbixUrl.objects.all()
     urllist = [i.url for i in zabbix_url]
@@ -121,6 +131,7 @@ def urlListView(request):
 
 
 @login_required
+@permissionVerify()
 def addUrlView(request):
     if request.method == 'POST':
         form = addUrlForm(request.POST)
@@ -139,6 +150,7 @@ def addUrlView(request):
 
 
 @login_required
+@permissionVerify()
 def delUrlView(request):
     url = request.POST.get('del_id')
     ZabbixUrl.objects.get(url=url).delete()
@@ -146,6 +158,7 @@ def delUrlView(request):
 
 
 @login_required
+@permissionVerify()
 def encrypt(password):
     password = password + '\0' * (16 - len(password)) if len(password) < 16 else password
     print len(password)
@@ -155,6 +168,7 @@ def encrypt(password):
 
 
 @login_required
+@permissionVerify()
 def decrypt(password):
     cryptor = AES.new(key, AES.MODE_CBC, the_salt)
     plain_text = cryptor.decrypt(a2b_hex(password))

@@ -8,6 +8,7 @@ import zabbixscript
 import zabbixtools.models_mongodb as db
 from django.http import HttpResponseRedirect, JsonResponse
 from django.core.urlresolvers import reverse
+from commonapp.views import permissionVerify
 import re
 from collections import OrderedDict
 import sys
@@ -55,6 +56,7 @@ def getUrlView(request, URL):
 
 
 @login_required
+@permissionVerify()
 def notjkGameListView(request):
     url = getCookieUrl(request)
     games_info = Game.objects.all()
@@ -71,6 +73,7 @@ def notjkGameListView(request):
 
 
 @login_required
+@permissionVerify()
 def jkGameListView(request):
     url = getCookieUrl(request)
     zabbix_url = ZabbixUrl.objects.all()
@@ -91,6 +94,7 @@ def jkGameListView(request):
 
 
 @login_required
+@permissionVerify()
 def templateListView(request):
     url = getCookieUrl(request)
     template_info = db.getTemplate(url)
@@ -101,6 +105,7 @@ def templateListView(request):
 
 
 @login_required
+@permissionVerify()
 def groupListView(request):
     url = getCookieUrl(request)
     group_info = db.getGroup(url)
@@ -111,6 +116,7 @@ def groupListView(request):
 
 
 @login_required
+@permissionVerify()
 def createGroupView(request):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -122,6 +128,7 @@ def createGroupView(request):
 
 
 @login_required
+@permissionVerify()
 def delGroupAndHostView(request):
     url = getCookieUrl(request)
     group_ids = request.REQUEST.getlist('group_list')
@@ -132,6 +139,7 @@ def delGroupAndHostView(request):
 
 
 @login_required
+@permissionVerify()
 def delGroupView(request):
     url = getCookieUrl(request)
     id_list = []
@@ -142,6 +150,7 @@ def delGroupView(request):
 
 
 @login_required
+@permissionVerify()
 def delHostByNameView(request):
     url = getCookieUrl(request)
     game_name_cn = request.POST['del_names']
@@ -154,6 +163,7 @@ def delHostByNameView(request):
 
 
 @login_required
+@permissionVerify()
 def delHostView(request, GNAME):
     url = getCookieUrl(request)
     host_id = request.POST['del_id']
@@ -162,6 +172,7 @@ def delHostView(request, GNAME):
 
 
 @login_required
+@permissionVerify()
 def delHostProjectView(request, GNAME):
     url = getCookieUrl(request)
     host_id = request.POST['del_id']
@@ -170,6 +181,7 @@ def delHostProjectView(request, GNAME):
 
 
 @login_required
+@permissionVerify()
 def manageHostView(request, GNAME):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -211,6 +223,7 @@ def manageHostView(request, GNAME):
 
 
 @login_required
+@permissionVerify()
 def createHostsView(request):
     url = getCookieUrl(request)
     game_list = request.REQUEST.getlist('game_list')
@@ -237,6 +250,7 @@ def createHostsView(request):
 
 
 @login_required
+@permissionVerify()
 def createHostView(request):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -280,6 +294,7 @@ def createHostView(request):
 
 
 @login_required
+@permissionVerify()
 def hostListView(request, GNAME):
     url = getCookieUrl(request)
     all_group = db.getGroup(url)
@@ -305,6 +320,7 @@ def hostListView(request, GNAME):
 
 
 @login_required
+@permissionVerify()
 def groupHostListView(request, GNAME):
     url = getCookieUrl(request)
     group_name = db.getGroup(url, group_id=GNAME)['name']
@@ -326,6 +342,7 @@ def groupHostListView(request, GNAME):
 
 
 @login_required
+@permissionVerify()
 def updateTemplateView(request, TNAME):
     url = getCookieUrl(request)
     result = db.getTemplate(url, template_name=TNAME)
@@ -373,6 +390,7 @@ def updateTemplateView(request, TNAME):
 
 
 @login_required
+@permissionVerify()
 def oneHostInfoView(request, HNAME):
     url = getCookieUrl(request)
     result = db.getHost(url, host_name=HNAME)
@@ -448,6 +466,7 @@ def oneHostInfoView(request, HNAME):
 
 
 @login_required
+@permissionVerify()
 def proxyListView(request):
     url = getCookieUrl(request)
     result = db.getProxy(url)
@@ -465,6 +484,7 @@ def proxyListView(request):
 
 
 @login_required
+@permissionVerify()
 def updateGroupView(request, GID):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -482,6 +502,7 @@ def updateGroupView(request, GID):
 
 
 @login_required
+@permissionVerify()
 def maintenanceListView(request):
     url = getCookieUrl(request)
     maintenance_list = []
@@ -507,6 +528,7 @@ def maintenanceListView(request):
 
 
 @login_required
+@permissionVerify()
 def calendarView(request):
     url = getCookieUrl(request)
     #  print request.method
@@ -607,6 +629,7 @@ def binToDec(num):
 
 
 @login_required
+@permissionVerify()
 def createMaintenanceView(request):
     url = getCookieUrl(request)
     if request.method == 'POST':
@@ -712,6 +735,7 @@ def createMaintenanceView(request):
 
 
 @login_required
+@permissionVerify()
 def delMaintenanceView(request, MNAME):
     url = getCookieUrl(request)
     MID = zabbixapi.getMaintenance(url, maintenance_name=MNAME)['result'][0]['maintenanceid']
@@ -720,6 +744,7 @@ def delMaintenanceView(request, MNAME):
 
 
 @login_required
+@permissionVerify()
 def notDeployAndHostViews(request, PNAME):
     url = getCookieUrl(request)
     zabbix_host = db.regexGetHost(url, PNAME)
@@ -738,6 +763,7 @@ def notDeployAndHostViews(request, PNAME):
 
 
 @login_required
+@permissionVerify()
 def sealAndZabbixViews(request):
     url = getCookieUrl(request)
     dicts = {}

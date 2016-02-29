@@ -4,17 +4,48 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 import zabbixtools.models_mongodb as db
-from zabbixapp.views.views import getCookieUrl
 from forms import UserForm, UserProfileForm, RoleListForm, ChangePasswordForm
 from django.contrib.auth import authenticate, login, logout
 from models import UserProfile, Role
 from django.contrib.auth.models import User
 from systemmanage.models import Game
+import re
 
 # Create your views here.
 
 
 @login_required
+def getCookieUrl(request):
+    if request.COOKIES.get('url'):
+        url = request.COOKIES.get('url')
+    else:
+        url = "http://123.59.6.164/api_jsonrpc.php"
+    return url
+
+
+def permissionVerify():
+    def decorator(view_func):
+        def wrapper(request, *args, **kwargs):
+            flag = False
+            user_info = UserProfile.objects.get(user=request.user)
+            role_info = Role.objects.get(name=user_info.role)
+            url_list = [i.url for i in role_info.url.all()]
+            for i in url_list:
+                if request.path == i or request.path.rstrip('/') == i:
+                    flag = True
+                elif re.match(i + '(.)*', request.path):
+                    flag = True
+                else:
+                    pass
+            if not flag:
+                return HttpResponseRedirect(reverse('nopermissionurl'))
+            return view_func(request, *args, **kwargs)
+        return wrapper
+    return decorator
+
+
+@login_required
+@permissionVerify()
 def logView(request):
     url = getCookieUrl(request)
     result = db.getLog(url)
@@ -43,12 +74,18 @@ def loginView(request):
 
 
 @login_required
+@permissionVerify()
 def logoutView(request):
     logout(request)
     return HttpResponseRedirect(reverse('loginurl'))
 
 
+def noPermissionView(request):
+    return render(request, 'common/nopermission.html')
+
+
 @login_required
+@permissionVerify()
 def addUserView(request):
     if request.method == 'POST':
         permission_list = [int(i) for i in request.POST.getlist('permission')]
@@ -77,12 +114,14 @@ def addUserView(request):
 
 
 @login_required
+@permissionVerify()
 def delUserView(request, ID):
     User.objects.get(id=ID).delete()
     return HttpResponseRedirect(reverse('userlisturl'))
 
 
 @login_required
+@permissionVerify()
 def editUserView(request, ID):
     user_info = User.objects.get(id=ID)
     profile_info = UserProfile.objects.get(user=user_info)
@@ -112,6 +151,7 @@ def editUserView(request, ID):
 
 
 @login_required
+@permissionVerify()
 def userListView(request):
     user_list = UserProfile.objects.all()
     context_dict = {
@@ -136,8 +176,8 @@ def changePasswordView(request):
 
 
 @login_required
+@permissionVerify()
 def roleListView(request):
-    print request.path
     role_list = Role.objects.all()
     context_dict = {
         'list': role_list,
@@ -146,6 +186,7 @@ def roleListView(request):
 
 
 @login_required
+@permissionVerify()
 def editRoleView(request, ID):
     role_info = Role.objects.get(id=ID)
     if request.method == 'POST':
