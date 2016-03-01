@@ -10,11 +10,11 @@ import ConfigParser
 import os
 pathdir = os.getcwd()
 
-mail_host = "AXES.com"
-mail_postfix = "AXES.cyou"
-mail_user = "AXESMail"
-mail_passwd = "AXESMail"
-mail_to_who = ['15145880789@163.com', 'lixiang_dev@cyou-inc.com', 'zhaolei@cyou-inc.com']
+mail_host = "****"
+mail_postfix = "****"
+mail_user = "****"
+mail_passwd = "****"
+mail_to_who = ['15145880789@163.com']
 
 
 def getIPList():
