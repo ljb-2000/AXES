@@ -8,6 +8,7 @@ urlpatterns = patterns(
     '',
     url(r'^geturl/url=(?P<URL>[^/]+)/$', views.getUrlView, name='geturlurl'),
     url(r'^projectlist/$', views.jkGameListView, name='isjkgamelisturl'),
+    url(r'^yourproject/$', views.yourProjectView, name='yourprojecturl'),
     url(r'^calendar/$', views.calendarView, name='calendarurl'),
     url(r'^hostlist/$', views.sealAndZabbixViews, name='hostlisturl'),
     url(r'^notdeployhostlist/projectname=(?P<PNAME>[^/]+)/$', views.notDeployAndHostViews, name='notdeployhostlisturl'),

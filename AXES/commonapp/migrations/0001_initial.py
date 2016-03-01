@@ -14,27 +14,32 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Permission',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=255)),
-                ('project', models.ForeignKey(blank=True, to='systemmanage.Game', null=True)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Role',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255)),
+                ('role', models.IntegerField(null=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Url',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('url', models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('permission', models.ManyToManyField(to='commonapp.Permission', blank=True)),
+                ('permission', models.ManyToManyField(to='systemmanage.Game', blank=True)),
                 ('role', models.ForeignKey(blank=True, to='commonapp.Role', null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
+        ),
+        migrations.AddField(
+            model_name='role',
+            name='url',
+            field=models.ManyToManyField(to='commonapp.Url', null=True, blank=True),
         ),
     ]

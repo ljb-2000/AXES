@@ -34,7 +34,6 @@ CHINESE_ENGILSH = {
 }
 
 
-@login_required
 def getCookieUrl(request):
     if request.COOKIES.get('url'):
         url = request.COOKIES.get('url')
@@ -74,6 +73,20 @@ def notjkGameListView(request):
 
 @login_required
 @permissionVerify()
+def yourProjectView(request):
+    zabbix_url = ZabbixUrl.objects.all()
+    urllist = [i.url for i in zabbix_url]
+    game_list = request.user.userprofile.permission.all()
+    context_dict = {
+        'list': game_list,
+    }
+    request.session['urllist'] = urllist
+    request.session['length'] = len(urllist)
+    return render(request, 'zabbixmanage/yourproject.html', context_dict)
+
+
+@login_required
+@permissionVerify()
 def jkGameListView(request):
     url = getCookieUrl(request)
     zabbix_url = ZabbixUrl.objects.all()
@@ -109,8 +122,18 @@ def templateListView(request):
 def groupListView(request):
     url = getCookieUrl(request)
     group_info = db.getGroup(url)
+    group_list = []
+    project = request.user.userprofile.permission.all()
+    project_list = [i.game_name_cn for i in project]
+    for i in group_info:
+        if i['name'].split('_')[0] in project_list:
+            group_dict = {}
+            group_dict['groupid'] = i['groupid']
+            group_dict['name'] = i['name']
+            group_dict['hosts'] = i['hosts']
+            group_list.append(group_dict)
     context_dict = {
-        'list': group_info,
+        'list': group_list,
     }
     return render(request, 'zabbixmanage/grouptable.html', context_dict)
 

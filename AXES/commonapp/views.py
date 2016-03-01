@@ -58,14 +58,20 @@ def logView(request):
 def loginView(request):
     error_flag = False
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('isjkgamelisturl'))
+        if request.user.userprofile.role.role == 0:
+            return HttpResponseRedirect(reverse('isjkgamelisturl'))
+        else:
+            return HttpResponseRedirect(reverse('yourprojecturl'))
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            return HttpResponseRedirect(reverse('isjkgamelisturl'))
+            if request.user.userprofile.role.role == 0:
+                return HttpResponseRedirect(reverse('isjkgamelisturl'))
+            else:
+                return HttpResponseRedirect(reverse('yourprojecturl'))
         else:
             error_flag = True
             return render(request, 'common/login.html', {"error": u"用户名或者密码错误", 'error_flag': error_flag})
@@ -136,6 +142,8 @@ def editUserView(request, ID):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
+            for i in profile.permission.all():
+                profile.permission.remove(i)
             for i in permission_list:
                 profile.permission.add(Game.objects.get(id=i))
             return HttpResponseRedirect(reverse('userlisturl'))

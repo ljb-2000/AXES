@@ -1,0 +1,30 @@
+{% extends 'base/bases.html' %}
+{% block content %}
+<h4><i class="fa fa-angle-right"></i>zabbix管理----项目列表</h4>
+<br />
+<form action="" methon='post'>
+    <section id="unseen">
+        <table id="table_id" class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>游戏</th>
+                    <th>简写</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'hostlisturl' i.game_name_cn %}">{{i.game_name_cn}}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'hostlisturl' i.game_name_cn %}">{{i.game_name_py}}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <br />
+</form>
+{% endblock %}

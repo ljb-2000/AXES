@@ -116,12 +116,18 @@
                             <span>Zabbix管理</span>
                         </a>
                         <ul class="sub">
+                            {% if request.user.userprofile.role.role == 0 %}
                             <li><a href="{% url 'isjkgamelisturl' %}">项目列表</a></li>
-                            <li><a href="{% url 'templatelisturl' %}">模板列表</a></li>
+                            {% else %}
+                            <li><a href="{% url 'yourprojecturl' %}">项目列表</a></li>
+                            {% endif %}
                             <li><a href="{% url 'grouplisturl' %}">主机组列表</a></li>
+                            <li><a href="{% url 'templatelisturl' %}">模板列表</a></li>
                             <li><a href="{% url 'proxylisturl' %}">代理列表</a></li>
+                            {% if request.user.userprofile.role.role == 0 %}
                             <li><a href="{% url 'hostlisturl' %}">主机比对</a></li>
-                        </ul endif endif  >
+                            {% endif %}
+                        </ul>
                         </li>
                         {% endif %}
                         {% if request.user.userprofile.role.role == 0 %}
