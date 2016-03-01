@@ -32,7 +32,7 @@ class MyThread(threading.Thread):
 
 
 def getDataFromSeal(project_name):
-    url = u"http://seal.cyou-inc.com/a/application/deviceInterface/getDeviceInfo/assetInfo?"
+    url = u"***********************"
     project_name = urllib.urlencode({'productName': project_name.decode('utf-8')})
     url += project_name
     request_data = urllib2.Request(url, '')
